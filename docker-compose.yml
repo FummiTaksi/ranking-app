@@ -1,0 +1,22 @@
+version: '3'
+
+services:
+  database:
+    container_name: rankingapp-database
+    image: mongo:4.2.0
+    ports: 
+      - 1048:27017
+    expose:
+      - 27017
+
+  backend:
+    build: ./backend
+    container_name: rankingapp-backend
+    image: rankingapp-backend
+    ports: 
+      - 3001:3001
+    expose: 
+      - 3001
+    depends_on: 
+      - database
+    

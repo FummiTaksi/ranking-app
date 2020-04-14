@@ -1,0 +1,49 @@
+{
+  "name": "ranking-app-frontend",
+  "version": "0.1.0",
+  "private": true,
+  "dependencies": {
+    "axios": "^0.18.1",
+    "chart.js": "^2.7.2",
+    "dropzone": "^5.5.1",
+    "prop-types": "^15.6.2",
+    "react": "^16.5.0",
+    "react-chartjs-2": "^2.7.4",
+    "react-dom": "^16.5.0",
+    "react-dropzone": "^4.3.0",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.3.1",
+    "redux": "^4.0.0",
+    "redux-thunk": "^2.3.0",
+    "semantic-ui-react": "^0.82.3"
+  },
+  "devDependencies": {
+    "coveralls": "^3.0.2",
+    "deep-freeze": "0.0.1",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-react": "^7.11.1",
+    "react-scripts": "^3.4.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "NODE_ENV=test react-scripts test --env=jsdom --coverage",
+    "lint": "eslint --ext .js,.jsx src",
+    "eject": "react-scripts eject"
+  },
+  "proxy": "http://localhost:3001",
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  }
+}
