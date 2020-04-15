@@ -1,12 +1,12 @@
 FROM node:9
 
-WORKDIR /usr/app
-
-COPY package*.json ./
-
-RUN npm install
+RUN mkdir -p /usr/app
 
 COPY . /usr/app/
+
+WORKDIR /usr/app
+
+RUN npm install
 
 EXPOSE 3001
 
