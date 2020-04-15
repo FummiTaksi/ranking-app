@@ -3,7 +3,7 @@
 Purpose of this website is to offer long term statisctics
 for table tennis players who play in Finland.
 
-Developed in co-operation with [Finnish table tennis association](www.sptl.fi)
+Developed in co-operation with [Finnish table tennis association](http://www.sptl.fi/sptl_uudet/)
 
 
 
