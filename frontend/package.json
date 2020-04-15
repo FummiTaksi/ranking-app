@@ -33,7 +33,7 @@
     "lint": "eslint --ext .js,.jsx src",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:3001",
+  "proxy": "http://backend:3001",
   "browserslist": {
     "production": [
       ">0.2%",

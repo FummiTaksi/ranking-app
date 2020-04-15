@@ -8,7 +8,17 @@ Ranking-app frontend
 
 # HOW TO DEVELOP
 
-Prerequisities: npm
+Prerequisities: DOCKER
+
+## RUN LOCALLY
+
+From the root of the repository
+
+```
+docker build . --tag rankingapp-frontend
+docker run -p 3000:3000 -i rankingapp-frontend
+
+```
 
 ## RUN TESTS
 
@@ -16,12 +26,4 @@ From the root of the repository
 
 ```
 npm test
-```
-
-## RUN LOCALLY
-
-From the root of the repository
-
-```
-npm start
 ```
