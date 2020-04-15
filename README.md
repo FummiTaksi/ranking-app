@@ -1,4 +1,17 @@
-# HOW TO RUN
+# RANKING-APP
+
+Purpose of this website is to offer long term statisctics
+for table tennis players who play in Finland.
+
+Developed in co-operation with [Finnish table tennis association](www.sptl.fi)
+
+
+
+## HOW TO RUN
+
+Prerequisities: [Docker](https://docs.docker.com/get-docker/)
+
+Run the following in the root of this repository
 
 ```
 docker-compose up
@@ -7,6 +20,7 @@ docker-compose up
 Application opens in localhost:3001
 
 ## HOW TO CONNECT TO DATABASE
+
 
 ````
 docker exec -it rankingapp-database mongo
@@ -26,6 +40,21 @@ to see that the admin is seeded correctly
 
 ## HOW TO RUN TESTS
 
+The following commands will work when the containers are running.
+
+### BACKEND UNIT TESTS
+
+Requires database and backend containers running. 
+
 ```
 docker exec -it rankingapp-backend npm run test:unit
 ```
+
+### FRONTEND UNIT TESTS
+
+Requires frontend container running
+
+```
+docker exec -it rankingapp-frontend npm run test
+```
+
