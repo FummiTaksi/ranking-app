@@ -17,25 +17,7 @@ Run the following in the root of this repository
 docker-compose up
 ```
 
-Application opens in localhost:3001
-
-## HOW TO CONNECT TO DATABASE
-
-
-````
-docker exec -it rankingapp-database mongo
-connect("mongodb://database:27017")
-use devDB
-````
-
-now you can query the db, for example
-
-```
-show collections
-db.users.find()
-```
-
-to see that the admin is seeded correctly
+Application opens in localhost:3000
 
 
 ## HOW TO RUN TESTS
@@ -58,3 +40,20 @@ Requires frontend container running
 docker exec -it rankingapp-frontend npm run test
 ```
 
+## HOW TO CONNECT TO DATABASE
+
+
+````
+docker exec -it rankingapp-database mongo
+connect("mongodb://database:27017")
+use devDB
+````
+
+now you can query the db, for example
+
+```
+show collections
+db.users.find()
+```
+
+to see that the admin is seeded correctly
