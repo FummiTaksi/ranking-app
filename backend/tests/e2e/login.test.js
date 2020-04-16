@@ -17,7 +17,7 @@ describe('When user goest to login page ', () => {
     page = await browser.newPage();
   });
   beforeEach(async () => {
-    await page.goto('http://localhost:3003/#/signin');
+    await page.goto('http://frontend:3000/#/signin');
   });
   test(' it tells user signing in is only for admin', async () => {
     const textContent = await page.$eval('body', el => el.textContent);

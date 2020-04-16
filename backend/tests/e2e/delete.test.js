@@ -32,9 +32,9 @@ describe('deleting of ranking ', () => {
       await Position.remove({});
       const body = getRankingBody();
       await rankingService.createRanking(body);
-      await page.goto('http://localhost:3003/#/signin');
+      await page.goto('http://frontend:3000/#/signin');
       await login(page, process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
-      await page.goto('http://localhost:3003/#/rankings');
+      await page.goto('http://frontend:3000/#/rankings');
     });
     test('is possible', async () => {
       await page.waitForSelector('#rankingList');
@@ -53,12 +53,12 @@ describe('deleting of ranking ', () => {
       await Position.remove({});
       const body = getRankingBody();
       await rankingService.createRanking(body);
-      await page.goto('http://localhost:3003/#/');
+      await page.goto('http://frontend:3000/#/');
       await page.waitForSelector('#logOut');
       await page.click('#logOut');
     });
     test('is not possible', async () => {
-      await page.goto('http://localhost:3003/#/rankings');
+      await page.goto('http://frontend:3000/#/rankings');
       await page.waitForSelector('#rankingList');
       const textContent = await page.$eval('body', el => el.textContent);
       const includes = textContent.includes('Delete');

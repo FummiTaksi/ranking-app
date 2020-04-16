@@ -6,7 +6,7 @@ const login = async (page, username, password) => {
 const timeout = 200000;
 
 const uploadRanking = async (page, filePath, rankingName, rankingDate) => {
-  await page.goto('http://localhost:3003/#/upload');
+  await page.goto('http://frontend:3000/#/upload');
   await page.waitForSelector('.success', { hidden: true }, timeout);
   await page.waitForSelector('#fileDrop');
   const fileEle = await page.$('input[type="file"]');
