@@ -40,6 +40,15 @@ Requires frontend container running
 docker exec -it rankingapp-frontend npm run test
 ```
 
+
+### END TO END TESTS
+
+```
+docker exec -it rankingapp-backend npm run test:e2e
+```
+
+
+
 ## HOW TO CONNECT TO DATABASE
 
 
