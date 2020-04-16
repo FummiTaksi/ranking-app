@@ -13,6 +13,9 @@ services:
     build: ./backend
     container_name: rankingapp-backend
     image: rankingapp-backend
+    volumes: 
+      - ./backend:/usr/app/
+      - /usr/app/node_modules
     ports: 
       - 3001:3001
     expose: 
@@ -26,6 +29,7 @@ services:
     image: rankingapp-frontend
     volumes: 
       - ./frontend:/usr/app/
+      - /usr/app/node_modules
     stdin_open: true
     ports:
       - 3000:3000
