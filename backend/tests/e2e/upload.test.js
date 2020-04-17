@@ -30,13 +30,13 @@ describe('When user goes to upload page ', () => {
     beforeAll(async () => {
       await Ranking.remove({});
       await Position.remove({});
-      await page.goto('http://localhost:3000/#/signin');
+      await page.goto('http://frontend:3000/#/signin');
       await login(page, process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
     }, timeout);
 
     test(' ranking which is in spring can be created', async () => {
       await uploadSpringRanking(page);
-      await page.goto('http://localhost:3000/#/rankings');
+      await page.goto('http://frontend:3000/#/rankings');
       await page.waitForSelector('#rankingList');
       const textContent = await page.$eval('body', el => el.textContent);
       const includes = textContent.includes('Puppeteer Competition');
@@ -45,7 +45,7 @@ describe('When user goes to upload page ', () => {
 
     test(' ranking which is in fall can be created', async () => {
       await uploadFallRanking(page);
-      await page.goto('http://localhost:3000/#/rankings');
+      await page.goto('http://frontend:3000/#/rankings');
       await page.waitForSelector('#rankingList');
       const textContent = await page.$eval('body', el => el.textContent);
       const includes = textContent.includes('Fall Competition');
