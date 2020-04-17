@@ -43,10 +43,17 @@ docker exec -it rankingapp-frontend npm run test
 
 ### END TO END TESTS
 
+RUN ALL TESTS:
+
 ```
 docker exec -it rankingapp-backend npm run test:e2e
 ```
 
+RUN SINGLE TEST:
+
+```
+docker exec -it rankingapp-backend ./node_modules/.bin/jest --runInBand --forceExit ./tests/e2e/aboutpage.test.js
+```
 
 
 ## HOW TO CONNECT TO DATABASE
