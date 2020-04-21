@@ -48,6 +48,11 @@ jobs:
     - name: Frontend lint
       run: 
         docker exec rankingapp-frontend npm run lint
+
+    - name: Frontend unit test
+      run:
+        docker exec rankingapp-frontend npm test
+
     - name: Teardown
       run:
         docker-compose down
