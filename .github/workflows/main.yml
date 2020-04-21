@@ -30,12 +30,9 @@ jobs:
     - name: Compose
       run: 
         docker-compose up -d
-        docker exec -it rankingapp-backend npm run lint
-        docker-compose down
 
     - name: Backend lint
       run: 
-        docker-compose up -d
         docker exec -it rankingapp-backend npm run lint
 
     - name: Teardown
