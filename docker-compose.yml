@@ -13,7 +13,12 @@ services:
     build: ./backend
     container_name: rankingapp-backend
     image: rankingapp-backend
-    env_file: ./.env
+    environment:
+      - PORT
+      - TEST_PORT
+      - SECRET
+      - ADMIN_USERNAME
+      - ADMIN_PASSWORD
     volumes: 
       - ./backend:/usr/app/
       - /usr/app/node_modules
