@@ -51,7 +51,7 @@ jobs:
 
     - name: Frontend unit test
       run:
-        docker exec rankingapp-frontend npm test
+        docker exec rankingapp-frontend npm run test
 
     - name: Teardown
       run:
