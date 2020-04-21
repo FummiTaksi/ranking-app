@@ -6,7 +6,7 @@ name: CI
 # events but only for the master branch
 on:
   push:
-    branches: [ master ]
+    branches: [ master, CI ]
   pull_request:
     branches: [ master ]
 
@@ -29,4 +29,15 @@ jobs:
     # Runs a set of commands using the runners shell
     - name: Compose
       run: 
-        docker-compose up
+        docker-compose up -d
+        docker exec -it rankingapp-backend npm run lint
+        docker-compose down
+
+    - name: Backend lint
+      run: 
+        docker-compose up -d
+        docker exec -it rankingapp-backend npm run lint
+
+    - name: Teardown
+      run:
+        docker-compose down
