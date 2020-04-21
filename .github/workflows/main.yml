@@ -33,7 +33,7 @@ jobs:
 
     - name: Backend lint
       run: 
-        docker exec -it rankingapp-backend npm run lint
+        docker exec rankingapp-backend npm run lint
 
     - name: Teardown
       run:
