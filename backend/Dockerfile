@@ -1,4 +1,4 @@
-FROM node:9
+FROM node:12
 
 
 RUN apt-get update \
@@ -15,7 +15,7 @@ WORKDIR /usr/app
 
 COPY package*.json /usr/app/
 
-RUN npm install
+RUN npm ci
 
 COPY . /usr/app/
 

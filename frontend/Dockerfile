@@ -1,11 +1,11 @@
-FROM node:9
+FROM node:12
 
 RUN mkdir -p /usr/app
 WORKDIR /usr/app
 
 COPY package*.json /usr/app/
 
-RUN npm install
+RUN npm ci
 
 COPY . /usr/app/
 
