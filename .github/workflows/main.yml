@@ -52,6 +52,8 @@ jobs:
     - name: Frontend unit test
       run:
         docker exec rankingapp-frontend npm run test
+      env:
+        CI: true
 
     - name: Teardown
       run:
