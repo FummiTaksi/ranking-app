@@ -29,7 +29,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "NODE_ENV=test react-scripts test --env=jsdom --coverage",
+    "test": "NODE_ENV=test CI=true react-scripts test --env=jsdom --coverage",
     "lint": "eslint --ext .js,.jsx src",
     "eject": "react-scripts eject"
   },
