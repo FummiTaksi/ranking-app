@@ -6,7 +6,8 @@ const Position = require('../../models/position');
 const seeder = require('../../db/seeds');
 const config = require('../../utils/config');
 const {
-  login, uploadSpringRanking, uploadFallRanking, timeout,
+  login, uploadSpringRanking, uploadFallRanking,
+  uploadActualSizeRanking, timeout,
 } = require('./helper');
 const rankingService = require('../../services/rankingService');
 const { getRankingBody } = require('../helpers/testHelpers');
@@ -49,6 +50,15 @@ describe('When user goes to upload page ', () => {
       await page.waitForSelector('#rankingList');
       const textContent = await page.$eval('body', el => el.textContent);
       const includes = textContent.includes('Fall Competition');
+      expect(includes).toBeTruthy();
+    }, timeout);
+
+    test(' ranking with realistic size can be uploaded', async () => {
+      await uploadActualSizeRanking(page);
+      await page.goto('http://frontend:3000/#/rankings');
+      await page.waitForSelector('#rankingList');
+      const textContent = await page.$eval('body', el => el.textContent);
+      const includes = textContent.includes('Tikakoski GP');
       expect(includes).toBeTruthy();
     }, timeout);
   });

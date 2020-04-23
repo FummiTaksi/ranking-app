@@ -28,6 +28,11 @@ const uploadFallRanking = async (page) => {
     'Fall Competition', '07.07.2018');
 };
 
+const uploadActualSizeRanking = async (page) => {
+  await uploadRanking(page, './tests/helpers/rating-files/fall/3282_Tikakoski_GP_su.xls',
+    ' Tikakoski GP', '01.11.2018');
+};
+
 module.exports = {
-  login, uploadSpringRanking, uploadFallRanking, timeout,
+  login, uploadSpringRanking, uploadFallRanking, uploadActualSizeRanking, timeout,
 };
