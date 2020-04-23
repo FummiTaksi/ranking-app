@@ -6,8 +6,7 @@ const Position = require('../../models/position');
 const seeder = require('../../db/seeds');
 const config = require('../../utils/config');
 const {
-  login, uploadSpringRanking, uploadFallRanking,
-  uploadActualSizeRanking, timeout,
+  login, uploadKoskenMaljaRanking, uploadTikakoskiRanking, timeout, rankingExists,
 } = require('./helper');
 const rankingService = require('../../services/rankingService');
 const { getRankingBody } = require('../helpers/testHelpers');
@@ -36,30 +35,17 @@ describe('When user goes to upload page ', () => {
     }, timeout);
 
     test(' ranking which is in spring can be created', async () => {
-      await uploadSpringRanking(page);
-      await page.goto('http://frontend:3000/#/rankings');
-      await page.waitForSelector('#rankingList');
-      const textContent = await page.$eval('body', el => el.textContent);
-      const includes = textContent.includes('Puppeteer Competition');
-      expect(includes).toBeTruthy();
+      const koskenMalja = 'Kosken malja GP';
+      await uploadKoskenMaljaRanking(page, koskenMalja);
+      const exists = await rankingExists(page, koskenMalja);
+      expect(exists).toBeTruthy();
     }, timeout);
 
     test(' ranking which is in fall can be created', async () => {
-      await uploadFallRanking(page);
-      await page.goto('http://frontend:3000/#/rankings');
-      await page.waitForSelector('#rankingList');
-      const textContent = await page.$eval('body', el => el.textContent);
-      const includes = textContent.includes('Fall Competition');
-      expect(includes).toBeTruthy();
-    }, timeout);
-
-    test(' ranking with realistic size can be uploaded', async () => {
-      await uploadActualSizeRanking(page);
-      await page.goto('http://frontend:3000/#/rankings');
-      await page.waitForSelector('#rankingList');
-      const textContent = await page.$eval('body', el => el.textContent);
-      const includes = textContent.includes('Tikakoski GP');
-      expect(includes).toBeTruthy();
+      const tikakoski = 'Tikakoski GP';
+      await uploadTikakoskiRanking(page, tikakoski);
+      const exists = await rankingExists(page, tikakoski);
+      expect(exists).toBeTruthy();
     }, timeout);
   });
 

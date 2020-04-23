@@ -18,21 +18,23 @@ const uploadRanking = async (page, filePath, rankingName, rankingDate) => {
   await page.click('button[type=submit]');
   await page.waitForSelector('.success', timeout);
 };
-const uploadSpringRanking = async (page) => {
-  await uploadRanking(page, './tests/helpers/rating-files/spring/TestRatingFile.xls',
-    'Puppeteer Competition', '06.06.2018');
+const uploadKoskenMaljaRanking = async (page, rankingName) => {
+  await uploadRanking(page, './tests/helpers/rating-files/spring/3321_Kosken_Malja_GP_su.xls',
+    rankingName, '01.01.2019');
 };
 
-const uploadFallRanking = async (page) => {
-  await uploadRanking(page, './tests/helpers/rating-files/fall/TestRatingFileFall.xls',
-    'Fall Competition', '07.07.2018');
-};
-
-const uploadActualSizeRanking = async (page) => {
+const uploadTikakoskiRanking = async (page, rankingName) => {
   await uploadRanking(page, './tests/helpers/rating-files/fall/3282_Tikakoski_GP_su.xls',
-    ' Tikakoski GP', '01.11.2018');
+    rankingName, '01.11.2018');
+};
+
+const rankingExists = async (page, rankingName) => {
+  await page.goto('http://frontend:3000/#/rankings');
+  await page.waitForSelector('#rankingList');
+  const textContent = await page.$eval('body', el => el.textContent);
+  return textContent.includes(rankingName);
 };
 
 module.exports = {
-  login, uploadSpringRanking, uploadFallRanking, uploadActualSizeRanking, timeout,
+  login, uploadKoskenMaljaRanking, uploadTikakoskiRanking, timeout, rankingExists,
 };
