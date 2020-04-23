@@ -28,6 +28,10 @@ jobs:
         ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
         ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
 
+    - name: Backend audit
+      run: 
+        docker exec rankingapp-backend npm audit
+
     - name: Backend lint
       run: 
         docker exec rankingapp-backend npm run lint
@@ -35,6 +39,10 @@ jobs:
     - name: Backend unit test
       run:
         docker exec rankingapp-backend npm run test:unit
+      
+    - name: Frontend audit
+      run: 
+        docker exec rankingapp-frontend npm audit
 
     - name: Frontend lint
       run: 

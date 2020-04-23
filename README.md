@@ -73,3 +73,26 @@ db.users.find()
 ```
 
 to see that the admin is seeded correctly
+
+## LINTING
+
+To check code formatting, for backend
+````
+docker exec rankingapp-backend npm run lint
+````
+and frontend
+````
+docker exec rankingapp-frontend npm run lint
+````
+
+
+## AUDIT
+
+To find vulnerabilties, for backend
+````
+docker exec rankingapp-backend npm run lint
+````
+and frontend
+````
+docker exec rankingapp-frontend npm run lint
+````
