@@ -49,7 +49,7 @@ RUN ALL TESTS:
 docker exec rankingapp-backend npm run test:e2e
 ```
 
-RUN SINGLE TEST:
+RUN TESTS IN SINGLE FILE:
 
 ```
 docker exec rankingapp-backend ./node_modules/.bin/jest --runInBand --forceExit ./tests/e2e/aboutpage.test.js
