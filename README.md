@@ -29,7 +29,7 @@ The following commands will work when the containers are running.
 Requires database and backend containers running. 
 
 ```
-docker exec -it rankingapp-backend npm run test:unit
+docker exec rankingapp-backend npm run test:unit
 ```
 
 ### FRONTEND UNIT TESTS
@@ -37,7 +37,7 @@ docker exec -it rankingapp-backend npm run test:unit
 Requires frontend container running
 
 ```
-docker exec -it rankingapp-frontend npm run test
+docker exec rankingapp-frontend npm run test
 ```
 
 
@@ -46,13 +46,13 @@ docker exec -it rankingapp-frontend npm run test
 RUN ALL TESTS:
 
 ```
-docker exec -it rankingapp-backend npm run test:e2e
+docker exec rankingapp-backend npm run test:e2e
 ```
 
 RUN SINGLE TEST:
 
 ```
-docker exec -it rankingapp-backend ./node_modules/.bin/jest --runInBand --forceExit ./tests/e2e/aboutpage.test.js
+docker exec rankingapp-backend ./node_modules/.bin/jest --runInBand --forceExit ./tests/e2e/aboutpage.test.js
 ```
 
 
