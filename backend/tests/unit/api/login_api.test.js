@@ -24,7 +24,7 @@ describe('/api/login', () => {
       .expect(403)
       .expect('Content-Type', /application\/json/);
   }, apiTestTimeout);
-  describe('with correct credentials ', async () => {
+  describe('with correct credentials ', () => {
     const correctCredentials = {
       username: process.env.ADMIN_USERNAME,
       password: process.env.ADMIN_PASSWORD,
