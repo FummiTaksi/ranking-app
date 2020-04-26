@@ -96,3 +96,13 @@ and frontend
 ````
 docker exec rankingapp-frontend npm audit
 ````
+
+
+### PRODUCTION
+
+To run the production version, run following (you need the MONGOLAB_URL set correctly)
+
+
+```
+docker-compose -f docker-compose.production.yml up
+```
