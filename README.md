@@ -90,9 +90,9 @@ docker exec rankingapp-frontend npm run lint
 
 To find vulnerabilties, for backend
 ````
-docker exec rankingapp-backend npm run lint
+docker exec rankingapp-backend npm audit
 ````
 and frontend
 ````
-docker exec rankingapp-frontend npm run lint
+docker exec rankingapp-frontend npm audit
 ````
