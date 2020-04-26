@@ -3,9 +3,11 @@ version: '3'
 services:
 
   backend:
-    build: ./backend
-    container_name: rankingapp-backend
-    image: rankingapp-backend
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.prod
+    container_name: rankingapp-backend-prod
+    image: rankingapp-backend-prod
     environment:
       - PORT
       - MONGOLAB_URL
