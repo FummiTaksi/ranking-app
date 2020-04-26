@@ -1,0 +1,29 @@
+version: '3'
+
+services:
+
+  backend:
+    build: ./backend
+    container_name: rankingapp-backend
+    image: rankingapp-backend
+    environment:
+      - PORT
+      - MONGOLAB_URL
+      - SECRET
+      - ADMIN_USERNAME
+      - ADMIN_PASSWORD
+    ports: 
+      - 3001:3001
+    expose: 
+      - 3001
+
+  frontend:
+    build: ./frontend
+    container_name: rankingapp-frontend
+    image: rankingapp-frontend
+    stdin_open: true
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+      
