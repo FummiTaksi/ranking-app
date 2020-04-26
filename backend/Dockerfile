@@ -21,4 +21,5 @@ COPY . /usr/app/
 
 EXPOSE 3001
 
-CMD ["npm", "run", "watch"]
+CMD ["npm", "start"]
+# FOR DEVELOPMENT, USE: CMD ["npm", "run", "watch"]
