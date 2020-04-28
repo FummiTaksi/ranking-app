@@ -4,15 +4,14 @@ RUN mkdir -p /usr/app
 WORKDIR /usr/app
 
 COPY package*.json /usr/app/
+COPY public  /usr/app
 
-RUN npm install --production
-
+RUN npm ci
+RUN chmod a+x /usr/app/node_modules/.bin/react-scripts
 COPY . /usr/app/
+RUN npm run build
 
-
-EXPOSE 3000
-
-CMD ["npm", "build"]
+COPY build /usr/app/
 
 
 FROM nginx:stable-alpine
