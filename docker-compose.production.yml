@@ -25,6 +25,8 @@ services:
       dockerfile: Dockerfile.prod
     container_name: rankingapp-frontend-prod
     image: rankingapp-frontend-prod
+    environment:
+      - BACKEND_URL
     stdin_open: true
     ports:
       - 80:80
