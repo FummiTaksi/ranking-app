@@ -1,8 +1,7 @@
-require('dotenv').config();
-  
-let { BACKEND_URL } = process.env;
+console.log('process.env', process.env);
 
-BACKEND_URL = BACKEND_URL ? BACKEND_URL : '/api'
+
+const BACKEND_URL = process.env.NODE_ENV === 'production' ? 'http://localhost:3001/api' : '/api'
 
 module.exports = {
  BACKEND_URL
