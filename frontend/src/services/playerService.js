@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { BACKEND_URL } from '../utils/config';
 
-const baseUrl = '/api/players';
+const baseUrl = `${BACKEND_URL}/players`;
 
 const getPlayers = async () => {
   const url = `${baseUrl}/`;

@@ -1,6 +1,7 @@
 import axios from 'axios';
+import { BACKEND_URL } from '../utils/config';
 
-const baseUrl = '/api/ranking';
+const baseUrl = `${BACKEND_URL}/ranking`;
 
 let token = '';
 
