@@ -3,10 +3,10 @@ const mongoose = require('mongoose');
 const http = require('http');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
+const cors = require('cors');
+
 const config = require('./utils/config');
-
 const seeder = require('./db/seeds');
-
 const loginRouter = require('./controllers/login');
 const rankingRouter = require('./controllers/ranking');
 const playerRouter = require('./controllers/player');
@@ -14,6 +14,9 @@ const playerRouter = require('./controllers/player');
 const middlewares = require('./middlewares/middlewares');
 
 const app = express();
+
+
+app.use(cors());
 
 // app.use(bodyParser.json())
 app.use(bodyParser.json({ limit: '1000mb' }));
