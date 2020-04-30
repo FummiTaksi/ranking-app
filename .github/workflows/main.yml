@@ -62,7 +62,11 @@ jobs:
 
     - name: Build frontent prod
       if: github.ref == 'refs/heads/master'
-      run: docker build -f ./frontend/Dockerfile.prod . --tag rankingapp-frontend-prod
+      run: cd frontend && docker build -f Dockerfile.prod . --tag rankingapp-frontend-prod
+
+    - name: Build backend prod
+      if: github.ref == 'refs/heads/master'
+      run: docker build -f ./backend/Dockerfile.prod . --tag rankingapp-backend-prod
     
     
       
