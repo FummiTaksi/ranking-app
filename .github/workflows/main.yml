@@ -62,11 +62,21 @@ jobs:
 
     - name: Build frontent prod
       if: github.ref == 'refs/heads/master'
-      run: cd frontend && docker build -f Dockerfile.prod . --tag rankingapp-frontend-prod
+      run: cd frontend && docker build -f Dockerfile.prod . --tag registry.heroku.com/tt-ranks-fin/web   
 
     - name: Build backend prod
       if: github.ref == 'refs/heads/master'
-      run: cd backend && docker build -f Dockerfile.prod . --tag rankingapp-backend-prod
+      run: cd backend && docker build -f Dockerfile.prod . --tag registry.heroku.com/tt-ranks-fin-api/web   
+
+    - name: Login to Heroku Container registry
+       env: 
+         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+       run: heroku container:login 
+
+    - name: Push backend
+      env:
+        HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+      run: docker push registry.heroku.com/tt-ranks-fin-api/web
     
     
       
