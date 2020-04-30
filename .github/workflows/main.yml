@@ -60,8 +60,7 @@ jobs:
       run:
         docker-compose down
 
-    if: github.ref == 'refs/heads/master'
-
-        - name: Build frontent prod
-          run: docker build -f ./frontend/Dockerfile.prod --tag rankingapp-frontend-prod
+    - name: Build frontent prod
+      if: github.ref == 'refs/heads/master'
+      run: docker build -f ./frontend/Dockerfile.prod --tag rankingapp-frontend-prod
       
