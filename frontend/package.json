@@ -2,6 +2,10 @@
   "name": "ranking-app-frontend",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/FummiTaksi/ranking-app"
+  },
   "dependencies": {
     "axios": "^0.18.1",
     "chart.js": "^2.7.2",
