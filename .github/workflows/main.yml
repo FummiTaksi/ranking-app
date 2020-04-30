@@ -55,7 +55,13 @@ jobs:
     - name: End to end tests
       run:
         docker exec rankingapp-backend npm run test:e2e
-
+    
     - name: Teardown
       run:
         docker-compose down
+
+    if: github.ref == 'refs/heads/master'
+
+        - name: Build frontent prod
+          run: docker build -f ./frontend/Dockerfile.prod --tag rankingapp-frontend-prod
+      
