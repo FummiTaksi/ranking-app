@@ -9,7 +9,7 @@ on: [push, pull_request]
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  build:
+  test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -60,42 +60,42 @@ jobs:
       run:
         docker-compose down
 
+  deploy:
+    if: github.ref == 'refs/heads/master'
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+        
     - name: Build frontent prod
-      if: github.ref == 'refs/heads/master'
       run: cd frontend && docker build -f Dockerfile.prod . --tag registry.heroku.com/tt-ranks-fin/web   
 
     - name: Build backend prod
-      if: github.ref == 'refs/heads/master'
       run: cd backend && docker build -f Dockerfile.prod . --tag registry.heroku.com/tt-ranks-fin-api/web   
 
     - name: Login to Heroku Container registry
-      if: github.ref == 'refs/heads/master'
       env: 
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: heroku container:login 
 
     - name: Push backend
-      if: github.ref == 'refs/heads/master'
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: docker push registry.heroku.com/tt-ranks-fin-api/web
 
     - name: Release backend
-      if: github.ref == 'refs/heads/master'
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: heroku container:release web --app tt-ranks-fin-api   
     
 
     - name: Push frontend
-      if: github.ref == 'refs/heads/master'
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
       run: docker push registry.heroku.com/tt-ranks-fin/web
 
     - name: Release frontend
-      if: github.ref == 'refs/heads/master'
       env:
         HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
-      run: heroku container:release web --app tt-ranks-fin      
+      run: heroku container:release web --app tt-ranks-fin
+
       
