@@ -9,7 +9,7 @@ on: [push, pull_request]
 # A workflow run is made up of one or more jobs that can run sequentially or in parallel
 jobs:
   # This workflow contains a single job called "build"
-  compose:
+  test:
     # The type of runner that the job will run on
     runs-on: ubuntu-latest
 
@@ -27,12 +27,7 @@ jobs:
         SECRET: ${{ secrets.SECRET }}
         ADMIN_USERNAME: ${{ secrets.ADMIN_USERNAME }}
         ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-        
-  backend:
-    needs: [compose]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
+
     - name: Backend audit
       run: 
         docker exec rankingapp-backend npm audit --production
@@ -44,12 +39,7 @@ jobs:
     - name: Backend unit test
       run:
         docker exec rankingapp-backend npm run test:unit
-
-  frontend:
-    needs: [compose]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
+      
     - name: Frontend audit
       run: 
         docker exec rankingapp-frontend npm audit --production
@@ -62,11 +52,6 @@ jobs:
       run:
         docker exec rankingapp-frontend npm run test
 
-  puppeteer:
-    needs: [backend,frontend]
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
     - name: End to end tests
       run:
         docker exec rankingapp-backend npm run test:e2e
@@ -77,7 +62,7 @@ jobs:
 
   deploy:
     if: github.ref == 'refs/heads/master'
-    needs: [puppeteer]
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
