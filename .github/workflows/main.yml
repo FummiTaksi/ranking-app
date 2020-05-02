@@ -30,7 +30,7 @@ jobs:
 
     - name: Backend audit
       run: 
-        docker exec rankingapp-backend npm audit
+        docker exec rankingapp-backend npm audit --production
 
     - name: Backend lint
       run: 
@@ -42,7 +42,7 @@ jobs:
       
     - name: Frontend audit
       run: 
-        docker exec rankingapp-frontend npm audit
+        docker exec rankingapp-frontend npm audit --production
 
     - name: Frontend lint
       run: 
@@ -62,6 +62,7 @@ jobs:
 
   deploy:
     if: github.ref == 'refs/heads/master'
+    needs: [test]
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
