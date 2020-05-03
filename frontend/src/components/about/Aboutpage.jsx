@@ -24,8 +24,8 @@ const AboutPage = () => (
       <Icon name="github" circular />
           View source code:
       {' '}
-      <a href="https://github.com/FummiTaksi/ranking-app-backend">
-        https://github.com/FummiTaksi/ranking-app-backend
+      <a href="https://github.com/FummiTaksi/ranking-app">
+      https://github.com/FummiTaksi/ranking-app
       </a>
       <Divider />
       Any questions or suggestions?
