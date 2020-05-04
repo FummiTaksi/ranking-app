@@ -1,9 +1,10 @@
 # RANKING-APP
 
 Purpose of this website is to offer long term statisctics
-for table tennis players who play in Finland.
-
+for table tennis players who play in Finland.[Production](https://tt-ranks-fin.herokuapp.com/#/)
 Developed in co-operation with [Finnish table tennis association](http://www.sptl.fi/sptl_uudet/)
+
+![Continuous deployment pipeline](https://github.com/FummiTaksi/ranking-app/workflows/Continuous%20deployment%20pipeline/badge.svg)
 
 
 
