@@ -13,7 +13,7 @@ const rankingSchema = new mongoose.Schema({
 });
 
 rankingSchema.pre('deleteOne', { document: true }, async function (next) {
-  await this.model('Position').remove({ ranking: this._id }, next);
+  await this.model('Position').deleteOne({ ranking: this._id }, next);
 });
 
 const Ranking = mongoose.model('Ranking', rankingSchema);
