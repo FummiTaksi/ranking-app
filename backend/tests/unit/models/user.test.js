@@ -4,12 +4,16 @@ const config = require('../../../utils/config');
 const User = require('../../../models/user');
 
 beforeAll(async () => {
-  await mongoose.connect(config.MONGOLAB_URL);
+  await mongoose.connect(config.MONGOLAB_URL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+  });
 });
 
 describe('User', () => {
   beforeEach(async () => {
-    await User.remove({});
+    await User.deleteMany({});
   });
 
   const getCorrectUser = async () => {
@@ -30,6 +34,6 @@ describe('User', () => {
 });
 
 afterAll(async () => {
-  await User.remove({});
+  await User.deleteMany({});
   await mongoose.connection.close();
 });

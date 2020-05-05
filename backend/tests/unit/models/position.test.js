@@ -6,15 +6,19 @@ const Player = require('../../../models/player');
 const { getPositionModelBody, getRankingModelBody, getPlayerModelBody } = require('../../helpers/testHelpers');
 
 beforeAll(async () => {
-  await mongoose.connect(config.MONGOLAB_URL);
+  await mongoose.connect(config.MONGOLAB_URL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+  });
   mongoose.Promise = global.Promise;
 });
 
 describe('Position', () => {
   beforeEach(async () => {
-    await Ranking.remove({});
-    await Position.remove({});
-    await Player.remove({});
+    await Ranking.deleteMany({});
+    await Position.deleteMany({});
+    await Player.deleteMany({});
   });
 
   test(' can be created with valid credentials', async () => {
@@ -55,8 +59,8 @@ describe('Position', () => {
 });
 
 afterAll(async () => {
-  await Position.remove({});
-  await Ranking.remove({});
-  await Player.remove({});
+  await Position.deleteMany({});
+  await Ranking.deleteMany({});
+  await Player.deleteMany({});
   await mongoose.connection.close();
 });

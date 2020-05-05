@@ -5,13 +5,17 @@ const Player = require('../../../models/player');
 const { getPositionModelBody, getPlayerModelBody } = require('../../helpers/testHelpers');
 
 beforeAll(async () => {
-  await mongoose.connect(config.MONGOLAB_URL);
+  await mongoose.connect(config.MONGOLAB_URL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+  });
 });
 
 describe('Player ', () => {
   beforeEach(async () => {
-    await Player.remove({});
-    await Position.remove({});
+    await Player.deleteMany({});
+    await Position.deleteMany({});
   });
 
   const playerModel = getPlayerModelBody();
@@ -42,7 +46,7 @@ describe('Player ', () => {
 });
 
 afterAll(async () => {
-  await Player.remove({});
-  await Position.remove({});
+  await Player.deleteMany({});
+  await Position.deleteMany({});
   await mongoose.connection.close();
 });

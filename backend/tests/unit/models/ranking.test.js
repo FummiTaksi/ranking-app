@@ -5,13 +5,17 @@ const Position = require('../../../models/position');
 const { getPositionModelBody, getRankingModelBody } = require('../../helpers/testHelpers');
 
 beforeAll(async () => {
-  await mongoose.connect(config.MONGOLAB_URL);
+  await mongoose.connect(config.MONGOLAB_URL, {
+    useUnifiedTopology: true,
+    useNewUrlParser: true,
+    useCreateIndex: true,
+  });
 });
 
 describe('Ranking ', () => {
   beforeEach(async () => {
-    await Position.remove({});
-    await Ranking.remove({});
+    await Position.deleteMany({});
+    await Ranking.deleteMany({});
   });
 
   const rankingModel = getRankingModelBody();
@@ -41,7 +45,7 @@ describe('Ranking ', () => {
 });
 
 afterAll(async () => {
-  await Ranking.remove({});
-  await Position.remove({});
+  await Ranking.deleteMany({});
+  await Position.deleteMany({});
   await mongoose.connection.close();
 });
