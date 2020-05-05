@@ -1,14 +1,12 @@
-const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
-const config = require('../../../utils/config');
 const User = require('../../../models/user');
+const {
+  connectToMongoose,
+  disconnectFromMongoose,
+} = require('../../helpers/testHelpers');
 
 beforeAll(async () => {
-  await mongoose.connect(config.MONGOLAB_URL, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true,
-  });
+  await connectToMongoose();
 });
 
 describe('User', () => {
@@ -35,5 +33,5 @@ describe('User', () => {
 
 afterAll(async () => {
   await User.deleteMany({});
-  await mongoose.connection.close();
+  await disconnectFromMongoose();
 });

@@ -1,15 +1,14 @@
-const mongoose = require('mongoose');
-const config = require('../../../utils/config');
 const Position = require('../../../models/position');
 const Player = require('../../../models/player');
-const { getPositionModelBody, getPlayerModelBody } = require('../../helpers/testHelpers');
+const {
+  getPositionModelBody,
+  getPlayerModelBody,
+  connectToMongoose,
+  disconnectFromMongoose,
+} = require('../../helpers/testHelpers');
 
 beforeAll(async () => {
-  await mongoose.connect(config.MONGOLAB_URL, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true,
-  });
+  await connectToMongoose();
 });
 
 describe('Player ', () => {
@@ -48,5 +47,5 @@ describe('Player ', () => {
 afterAll(async () => {
   await Player.deleteMany({});
   await Position.deleteMany({});
-  await mongoose.connection.close();
+  await disconnectFromMongoose();
 });

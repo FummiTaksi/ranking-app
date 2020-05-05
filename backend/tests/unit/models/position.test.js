@@ -1,17 +1,16 @@
-const mongoose = require('mongoose');
-const config = require('../../../utils/config');
 const Position = require('../../../models/position');
 const Ranking = require('../../../models/ranking');
 const Player = require('../../../models/player');
-const { getPositionModelBody, getRankingModelBody, getPlayerModelBody } = require('../../helpers/testHelpers');
+const {
+  getPositionModelBody,
+  getRankingModelBody,
+  getPlayerModelBody,
+  connectToMongoose,
+  disconnectFromMongoose,
+} = require('../../helpers/testHelpers');
 
 beforeAll(async () => {
-  await mongoose.connect(config.MONGOLAB_URL, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true,
-  });
-  mongoose.Promise = global.Promise;
+  await connectToMongoose();
 });
 
 describe('Position', () => {
@@ -62,5 +61,5 @@ afterAll(async () => {
   await Position.deleteMany({});
   await Ranking.deleteMany({});
   await Player.deleteMany({});
-  await mongoose.connection.close();
+  await disconnectFromMongoose();
 });
