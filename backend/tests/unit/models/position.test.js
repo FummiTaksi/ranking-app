@@ -7,6 +7,7 @@ const {
   getPlayerModelBody,
   connectToMongoose,
   disconnectFromMongoose,
+  removePositionsAndRankingsAndPlayers,
 } = require('../../helpers/testHelpers');
 
 beforeAll(async () => {
@@ -15,9 +16,7 @@ beforeAll(async () => {
 
 describe('Position', () => {
   beforeEach(async () => {
-    await Ranking.deleteMany({});
-    await Position.deleteMany({});
-    await Player.deleteMany({});
+    await removePositionsAndRankingsAndPlayers();
   });
 
   test(' can be created with valid credentials', async () => {
@@ -58,8 +57,6 @@ describe('Position', () => {
 });
 
 afterAll(async () => {
-  await Position.deleteMany({});
-  await Ranking.deleteMany({});
-  await Player.deleteMany({});
+  await removePositionsAndRankingsAndPlayers();
   await disconnectFromMongoose();
 });
