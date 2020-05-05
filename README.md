@@ -39,7 +39,7 @@ docker exec rankingapp-backend npm run test:unit
 RUN TESTS IN SINGLE FILE:
 
 ```
-docker exec rankingapp-backend ./node_modules/.bin/jest --verbose --runInBand --forceExit --coverage tests/unit/services/rankingService.test.js
+docker exec rankingapp-backend ./node_modules/.bin/jest --config jest.config.js --verbose --runInBand --forceExit --coverage tests/unit/services/rankingService.test.js
 ```
 
 ### FRONTEND UNIT TESTS
@@ -62,7 +62,7 @@ docker exec rankingapp-backend npm run test:e2e
 RUN TESTS IN SINGLE FILE:
 
 ```
-docker exec rankingapp-backend ./node_modules/.bin/jest --runInBand --forceExit ./tests/e2e/aboutpage.test.js
+docker exec rankingapp-backend ./node_modules/.bin/jest --config jest.config.js --runInBand --forceExit ./tests/e2e/aboutpage.test.js
 ```
 
 
