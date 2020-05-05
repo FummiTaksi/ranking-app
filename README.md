@@ -36,6 +36,12 @@ Requires database and backend containers running.
 docker exec rankingapp-backend npm run test:unit
 ```
 
+RUN TESTS IN SINGLE FILE:
+
+```
+docker exec rankingapp-backend ./node_modules/.bin/jest --verbose --runInBand --forceExit --coverage tests/unit/services/rankingService.test.js
+```
+
 ### FRONTEND UNIT TESTS
 
 Requires frontend container running
