@@ -5,6 +5,7 @@ const {
   getRankingModelBody,
   connectToMongoose,
   disconnectFromMongoose,
+  removePositionsAndRankings,
 } = require('../../helpers/testHelpers');
 
 beforeAll(async () => {
@@ -13,8 +14,7 @@ beforeAll(async () => {
 
 describe('Ranking ', () => {
   beforeEach(async () => {
-    await Position.deleteMany({});
-    await Ranking.deleteMany({});
+    await removePositionsAndRankings();
   });
 
   const rankingModel = getRankingModelBody();
@@ -44,7 +44,6 @@ describe('Ranking ', () => {
 });
 
 afterAll(async () => {
-  await Ranking.deleteMany({});
-  await Position.deleteMany({});
+  await removePositionsAndRankings();
   await disconnectFromMongoose();
 });

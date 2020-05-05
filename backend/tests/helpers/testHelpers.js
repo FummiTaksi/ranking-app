@@ -55,11 +55,16 @@ const getRatingBase64 = () => {
   return result;
 };
 
-const removePositionsAndRankingsAndPlayers = async () => {
+const removePositionsAndRankings = async () => {
   await Position.deleteMany({});
   await Ranking.deleteMany({});
+};
+
+const removePositionsAndRankingsAndPlayers = async () => {
+  await removePositionsAndRankings();
   await Player.deleteMany({});
 };
+
 
 const seedRatingExcelToDatabase = async () => {
   const body = getRankingBody();
@@ -75,6 +80,7 @@ module.exports = {
   getRankingBody,
   getRankingModelBody,
   getRatingBase64,
+  removePositionsAndRankings,
   removePositionsAndRankingsAndPlayers,
   getPlayerModelBody,
   seedRatingExcelToDatabase,
