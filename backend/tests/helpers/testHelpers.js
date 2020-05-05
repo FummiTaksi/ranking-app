@@ -56,9 +56,9 @@ const getRatingBase64 = () => {
 };
 
 const removePositionsAndRankingsAndPlayers = async () => {
-  await Position.remove({});
-  await Ranking.remove({});
-  await Player.remove({});
+  await Position.deleteMany({});
+  await Ranking.deleteMany({});
+  await Player.deleteMany({});
 };
 
 const seedRatingExcelToDatabase = async () => {
