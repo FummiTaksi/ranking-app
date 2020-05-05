@@ -34,7 +34,7 @@ const getRanking = async (rankingId) => {
 
 const deleteRanking = async (rankingId) => {
   const ranking = await getRanking(rankingId);
-  const removed = await ranking.remove();
+  const removed = await ranking.deleteOne();
   return removed;
 };
 
