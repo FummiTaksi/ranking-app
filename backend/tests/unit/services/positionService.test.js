@@ -1,13 +1,17 @@
-const mongoose = require('mongoose');
-const config = require('../../../utils/config');
 const Position = require('../../../models/position');
-const Ranking = require('../../../models/ranking');
 const rankingService = require('../../../services/rankingService');
 const positionService = require('../../../services/positionService');
-const { getRankingBody, getPositionModelBody } = require('../../helpers/testHelpers');
+const {
+  getRankingBody,
+  getPositionModelBody,
+  connectToMongoose,
+  disconnectFromMongoose,
+  removePositionsAndRankings,
+} = require('../../helpers/testHelpers');
 
 beforeAll(async () => {
-  await mongoose.connect(config.MONGOLAB_URL);
+  await connectToMongoose();
+  await removePositionsAndRankings();
 });
 
 describe('rankingService ', () => {
@@ -27,7 +31,6 @@ describe('rankingService ', () => {
 });
 
 afterAll(async () => {
-  await Position.remove({});
-  await Ranking.remove({});
-  await mongoose.connection.close();
+  await removePositionsAndRankings();
+  await disconnectFromMongoose();
 });

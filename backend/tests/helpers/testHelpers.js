@@ -12,6 +12,7 @@ const connectToMongoose = async () => {
     useUnifiedTopology: true,
     useNewUrlParser: true,
     useCreateIndex: true,
+    useFindAndModify: false,
   });
   mongoose.Promise = global.Promise;
 };

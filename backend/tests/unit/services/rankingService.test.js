@@ -1,18 +1,19 @@
-const mongoose = require('mongoose');
-const config = require('../../../utils/config');
 const Ranking = require('../../../models/ranking');
 const Position = require('../../../models/position');
 const Player = require('../../../models/player');
 const rankingService = require('../../../services/rankingService');
 const {
   getRankingBody,
-  getRankingModelBody, getPositionModelBody, getPlayerModelBody,
+  getRankingModelBody, getPositionModelBody,
+  getPlayerModelBody,
   removePositionsAndRankingsAndPlayers,
   seedRatingExcelToDatabase,
+  connectToMongoose,
+  disconnectFromMongoose,
 } = require('../../helpers/testHelpers');
 
 beforeAll(async () => {
-  await mongoose.connect(config.MONGOLAB_URL);
+  await connectToMongoose();
 });
 
 const saveRankingWithOnePosition = async () => {
@@ -132,5 +133,5 @@ describe('rankingService ', () => {
 
 afterAll(async () => {
   await removePositionsAndRankingsAndPlayers();
-  await mongoose.connection.close();
+  await disconnectFromMongoose();
 });
