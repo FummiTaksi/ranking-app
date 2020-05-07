@@ -1,17 +1,18 @@
 const puppeteer = require('puppeteer');
-const mongoose = require('mongoose');
 const User = require('../../models/user');
 const seeder = require('../../db/seeds');
-const config = require('../../utils/config');
 const { login, timeout } = require('./helper');
+const {
+  connectToMongoose,
+  disconnectFromMongoose,
+} = require('../../db/connection');
 
 describe('When user goest to login page ', () => {
   let browser;
   let page;
   beforeAll(async () => {
-    mongoose.connect(config.MONGOLAB_URL);
-    mongoose.Promise = global.Promise;
-    await User.remove({});
+    await connectToMongoose();
+    await User.deleteMany({});
     await seeder.seedAdminToDataBase();
     browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     page = await browser.newPage();
@@ -43,7 +44,7 @@ describe('When user goest to login page ', () => {
 
   afterAll(async () => {
     await browser.close();
-    await User.remove({});
-    await mongoose.connection.close();
+    await User.deleteMany({});
+    await disconnectFromMongoose();
   });
 });

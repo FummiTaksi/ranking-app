@@ -1,20 +1,21 @@
 const puppeteer = require('puppeteer');
-const mongoose = require('mongoose');
 const { timeout } = require('./helper');
 const seeder = require('../../db/seeds');
-const config = require('../../utils/config');
 const User = require('../../models/user');
 const Player = require('../../models/player');
 const { removePositionsAndRankingsAndPlayers, seedRatingExcelToDatabase } = require('../helpers/testHelpers');
+const {
+  connectToMongoose,
+  disconnectFromMongoose,
+} = require('../../db/connection');
 
 describe('When user visits players page ', () => {
   let browser;
   let page;
   beforeAll(async () => {
-    mongoose.connect(config.MONGOLAB_URL);
-    mongoose.Promise = global.Promise;
-    await User.remove({});
+    await connectToMongoose();
     await removePositionsAndRankingsAndPlayers();
+    await User.deleteMany({});
     await seeder.seedAdminToDataBase();
     await seedRatingExcelToDatabase();
     browser = await puppeteer.launch({ args: ['--no-sandbox'] });
@@ -41,8 +42,8 @@ describe('When user visits players page ', () => {
 
   afterAll(async () => {
     await browser.close();
-    await User.remove({});
+    await User.deleteMany({});
     await removePositionsAndRankingsAndPlayers();
-    await mongoose.connection.close();
+    await disconnectFromMongoose();
   });
 });

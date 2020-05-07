@@ -1,26 +1,29 @@
 const puppeteer = require('puppeteer');
-const mongoose = require('mongoose');
 const User = require('../../models/user');
-const Ranking = require('../../models/ranking');
-const Position = require('../../models/position');
 const seeder = require('../../db/seeds');
-const config = require('../../utils/config');
 const {
-  login, uploadKoskenMaljaRanking, uploadTikakoskiRanking, timeout, rankingExists,
+  login,
+  uploadKoskenMaljaRanking,
+  uploadTikakoskiRanking,
+  timeout,
+  rankingExists,
 } = require('./helper');
 const rankingService = require('../../services/rankingService');
-const { getRankingBody } = require('../helpers/testHelpers');
+const { getRankingBody, removePositionsAndRankings } = require('../helpers/testHelpers');
+const {
+  connectToMongoose,
+  disconnectFromMongoose,
+} = require('../../db/connection');
+
 
 describe('When user goes to upload page ', () => {
   let browser;
   let page;
 
   beforeAll(async () => {
-    mongoose.connect(config.MONGOLAB_URL);
-    mongoose.Promise = global.Promise;
-    await Ranking.remove({});
-    await Position.remove({});
-    await User.remove({});
+    await connectToMongoose();
+    await removePositionsAndRankings();
+    await User.deleteMany({});
     await seeder.seedAdminToDataBase();
     browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     page = await browser.newPage();
@@ -28,8 +31,7 @@ describe('When user goes to upload page ', () => {
 
   describe('and is signed in', () => {
     beforeAll(async () => {
-      await Ranking.remove({});
-      await Position.remove({});
+      await removePositionsAndRankings();
       await page.goto('http://frontend:3000/#/signin');
       await login(page, process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
     }, timeout);
@@ -51,8 +53,7 @@ describe('When user goes to upload page ', () => {
 
   describe(' and is not signed in', () => {
     beforeAll(async () => {
-      await Ranking.remove({});
-      await Position.remove({});
+      await removePositionsAndRankings();
       const body = getRankingBody();
       await rankingService.createRanking(body);
       await page.goto('http://frontend:3000/#/');
@@ -70,7 +71,7 @@ describe('When user goes to upload page ', () => {
 
   afterAll(async () => {
     await browser.close();
-    await User.remove({});
-    await mongoose.connection.close();
+    await User.deleteMany({});
+    await disconnectFromMongoose();
   }, timeout);
 });
