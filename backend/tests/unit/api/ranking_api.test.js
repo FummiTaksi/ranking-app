@@ -8,7 +8,7 @@ const api = supertest(app);
 
 
 const emptyDatabase = async () => {
-  await User.remove({});
+  await User.deleteMany({});
   await removePositionsAndRankingsAndPlayers();
 };
 

@@ -8,7 +8,7 @@ const api = supertest(app);
 
 
 beforeAll(async () => {
-  await User.remove({});
+  await User.deleteMany({});
   await seeder.seedAdminToDataBase();
 });
 
@@ -43,6 +43,6 @@ describe('/api/login', () => {
 });
 
 afterAll(async () => {
-  await User.remove({});
+  await User.deleteMany({});
   server.close();
 });

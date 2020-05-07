@@ -7,7 +7,7 @@ const seeder = require('../../../db/seeds');
 const api = supertest(app);
 
 beforeAll(async () => {
-  await User.remove({});
+  await User.deleteMany({});
   await seeder.seedAdminToDataBase();
 });
 
@@ -27,6 +27,6 @@ describe('When app is running', () => {
 
 
 afterAll(async () => {
-  await User.remove({});
+  await User.deleteMany({});
   server.close();
 });
