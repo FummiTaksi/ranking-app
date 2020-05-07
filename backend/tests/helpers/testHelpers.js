@@ -1,25 +1,9 @@
 const fs = require('fs');
-const mongoose = require('mongoose');
-const config = require('../../utils/config');
 const Position = require('../../models/position');
 const Ranking = require('../../models/ranking');
 const Player = require('../../models/player');
 const fileService = require('../../services/fileService');
 const rankingService = require('../../services/rankingService');
-
-const connectToMongoose = async () => {
-  await mongoose.connect(config.MONGOLAB_URL, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-  });
-  mongoose.Promise = global.Promise;
-};
-
-const disconnectFromMongoose = async () => {
-  await mongoose.connection.close();
-};
 
 const getPositionModelBody = (rankingId, playerId) => {
   const positionBody = {
@@ -86,6 +70,4 @@ module.exports = {
   getPlayerModelBody,
   seedRatingExcelToDatabase,
   apiTestTimeout,
-  connectToMongoose,
-  disconnectFromMongoose,
 };

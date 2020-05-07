@@ -5,10 +5,13 @@ const {
   getPositionModelBody,
   getRankingModelBody,
   getPlayerModelBody,
-  connectToMongoose,
-  disconnectFromMongoose,
   removePositionsAndRankingsAndPlayers,
 } = require('../../helpers/testHelpers');
+
+const {
+  connectToMongoose,
+  disconnectFromMongoose,
+} = require('../../../db/connection');
 
 beforeAll(async () => {
   await connectToMongoose();

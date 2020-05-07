@@ -3,10 +3,12 @@ const Position = require('../../../models/position');
 const {
   getPositionModelBody,
   getRankingModelBody,
-  connectToMongoose,
-  disconnectFromMongoose,
   removePositionsAndRankings,
 } = require('../../helpers/testHelpers');
+const {
+  connectToMongoose,
+  disconnectFromMongoose,
+} = require('../../../db/connection');
 
 beforeAll(async () => {
   await connectToMongoose();

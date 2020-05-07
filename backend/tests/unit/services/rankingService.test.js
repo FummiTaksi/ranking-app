@@ -4,13 +4,17 @@ const Player = require('../../../models/player');
 const rankingService = require('../../../services/rankingService');
 const {
   getRankingBody,
-  getRankingModelBody, getPositionModelBody,
+  getRankingModelBody,
+  getPositionModelBody,
   getPlayerModelBody,
   removePositionsAndRankingsAndPlayers,
   seedRatingExcelToDatabase,
+} = require('../../helpers/testHelpers');
+
+const {
   connectToMongoose,
   disconnectFromMongoose,
-} = require('../../helpers/testHelpers');
+} = require('../../../db/connection');
 
 beforeAll(async () => {
   await connectToMongoose();

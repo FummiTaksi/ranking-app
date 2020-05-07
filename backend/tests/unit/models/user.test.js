@@ -3,7 +3,7 @@ const User = require('../../../models/user');
 const {
   connectToMongoose,
   disconnectFromMongoose,
-} = require('../../helpers/testHelpers');
+} = require('../../../db/connection');
 
 beforeAll(async () => {
   await connectToMongoose();

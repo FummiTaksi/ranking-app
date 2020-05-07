@@ -3,9 +3,12 @@ const Player = require('../../../models/player');
 const {
   getPositionModelBody,
   getPlayerModelBody,
+} = require('../../helpers/testHelpers');
+
+const {
   connectToMongoose,
   disconnectFromMongoose,
-} = require('../../helpers/testHelpers');
+} = require('../../../db/connection');
 
 beforeAll(async () => {
   await connectToMongoose();
