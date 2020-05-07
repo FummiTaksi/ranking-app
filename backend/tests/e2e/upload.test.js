@@ -1,6 +1,4 @@
 const puppeteer = require('puppeteer');
-const User = require('../../models/user');
-const seeder = require('../../db/seeds');
 const {
   login,
   uploadKoskenMaljaRanking,
@@ -9,7 +7,12 @@ const {
   rankingExists,
 } = require('./helper');
 const rankingService = require('../../services/rankingService');
-const { getRankingBody, removePositionsAndRankings } = require('../helpers/testHelpers');
+const {
+  getRankingBody,
+  removePositionsAndRankings,
+  removeUsers,
+  removeUsersAndSeedAdmin,
+} = require('../helpers/testHelpers');
 const {
   connectToMongoose,
   disconnectFromMongoose,
@@ -23,8 +26,7 @@ describe('When user goes to upload page ', () => {
   beforeAll(async () => {
     await connectToMongoose();
     await removePositionsAndRankings();
-    await User.deleteMany({});
-    await seeder.seedAdminToDataBase();
+    await removeUsersAndSeedAdmin();
     browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     page = await browser.newPage();
   }, timeout);
@@ -71,7 +73,7 @@ describe('When user goes to upload page ', () => {
 
   afterAll(async () => {
     await browser.close();
-    await User.deleteMany({});
+    await removeUsers();
     await disconnectFromMongoose();
   }, timeout);
 });

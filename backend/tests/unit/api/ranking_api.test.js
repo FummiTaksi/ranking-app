@@ -1,21 +1,18 @@
 const supertest = require('supertest');
 const { app, server } = require('../../../index');
-const User = require('../../../models/user');
-const seeder = require('../../../db/seeds');
-const { getRatingBase64, removePositionsAndRankingsAndPlayers, apiTestTimeout } = require('../../helpers/testHelpers');
+const {
+  getRatingBase64,
+  removePositionsAndRankingsAndPlayers,
+  apiTestTimeout,
+  removeUsers,
+  removeUsersAndSeedAdmin,
+} = require('../../helpers/testHelpers');
 
 const api = supertest(app);
 
-
-const emptyDatabase = async () => {
-  await User.deleteMany({});
-  await removePositionsAndRankingsAndPlayers();
-};
-
-
 beforeAll(async () => {
-  await emptyDatabase();
-  await seeder.seedAdminToDataBase();
+  await removePositionsAndRankingsAndPlayers();
+  await removeUsersAndSeedAdmin();
 });
 
 const getCorrectToken = async () => {
@@ -151,6 +148,7 @@ describe('/api/ranking', () => {
 
 
 afterAll(async () => {
-  await emptyDatabase();
+  await removePositionsAndRankingsAndPlayers();
+  await removeUsers();
   server.close();
 });

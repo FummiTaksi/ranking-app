@@ -2,13 +2,15 @@ const supertest = require('supertest');
 const { app, server } = require('../../../index');
 const { apiTestTimeout } = require('../../helpers/testHelpers');
 const User = require('../../../models/user');
-const seeder = require('../../../db/seeds');
+const {
+  removeUsersAndSeedAdmin,
+  removeUsers,
+} = require('../../helpers/testHelpers');
 
 const api = supertest(app);
 
 beforeAll(async () => {
-  await User.deleteMany({});
-  await seeder.seedAdminToDataBase();
+  await removeUsersAndSeedAdmin();
 });
 
 describe('When app is running', () => {
@@ -27,6 +29,6 @@ describe('When app is running', () => {
 
 
 afterAll(async () => {
-  await User.deleteMany({});
+  await removeUsers();
   server.close();
 });

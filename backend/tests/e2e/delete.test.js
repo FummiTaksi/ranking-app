@@ -1,13 +1,13 @@
 const puppeteer = require('puppeteer');
-const User = require('../../models/user');
-const seeder = require('../../db/seeds');
 const {
   login, timeout,
 } = require('./helper');
 const rankingService = require('../../services/rankingService');
 const {
   getRankingBody,
+  removeUsers,
   removePositionsAndRankings,
+  removeUsersAndSeedAdmin,
 } = require('../helpers/testHelpers');
 const {
   connectToMongoose,
@@ -21,8 +21,7 @@ describe('deleting of ranking ', () => {
   beforeAll(async () => {
     await connectToMongoose();
     await removePositionsAndRankings();
-    await User.deleteMany({});
-    await seeder.seedAdminToDataBase();
+    await removeUsersAndSeedAdmin();
     browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     page = await browser.newPage();
   });
@@ -67,7 +66,7 @@ describe('deleting of ranking ', () => {
 
   afterAll(async () => {
     await browser.close();
-    await User.deleteMany({});
+    await removeUsers();
     await removePositionsAndRankings({});
     await disconnectFromMongoose();
   });

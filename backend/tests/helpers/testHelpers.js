@@ -2,8 +2,10 @@ const fs = require('fs');
 const Position = require('../../models/position');
 const Ranking = require('../../models/ranking');
 const Player = require('../../models/player');
+const User = require('../../models/user');
 const fileService = require('../../services/fileService');
 const rankingService = require('../../services/rankingService');
+const seeder = require('../../db/seeds');
 
 const getPositionModelBody = (rankingId, playerId) => {
   const positionBody = {
@@ -50,6 +52,15 @@ const removePositionsAndRankingsAndPlayers = async () => {
   await Player.deleteMany({});
 };
 
+const removeUsers = async () => {
+  await User.deleteMany({});
+};
+
+const removeUsersAndSeedAdmin = async () => {
+  await removeUsers();
+  await seeder.seedAdminToDataBase();
+};
+
 
 const seedRatingExcelToDatabase = async () => {
   const body = getRankingBody();
@@ -67,6 +78,8 @@ module.exports = {
   getRatingBase64,
   removePositionsAndRankings,
   removePositionsAndRankingsAndPlayers,
+  removeUsers,
+  removeUsersAndSeedAdmin,
   getPlayerModelBody,
   seedRatingExcelToDatabase,
   apiTestTimeout,

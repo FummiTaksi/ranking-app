@@ -1,15 +1,17 @@
 const supertest = require('supertest');
 const { app, server } = require('../../../index');
-const seeder = require('../../../db/seeds');
-const User = require('../../../models/user');
 const { apiTestTimeout } = require('../../helpers/testHelpers');
+
+const {
+  removeUsers,
+  removeUsersAndSeedAdmin,
+} = require('../../helpers/testHelpers');
 
 const api = supertest(app);
 
 
 beforeAll(async () => {
-  await User.deleteMany({});
-  await seeder.seedAdminToDataBase();
+  await removeUsersAndSeedAdmin();
 });
 
 describe('/api/login', () => {
@@ -43,6 +45,6 @@ describe('/api/login', () => {
 });
 
 afterAll(async () => {
-  await User.deleteMany({});
+  await removeUsers();
   server.close();
 });
