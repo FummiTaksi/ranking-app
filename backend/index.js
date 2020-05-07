@@ -1,5 +1,4 @@
 const express = require('express');
-const mongoose = require('mongoose');
 const http = require('http');
 const bodyParser = require('body-parser');
 const morgan = require('morgan');
@@ -7,6 +6,7 @@ const cors = require('cors');
 
 const config = require('./utils/config');
 const seeder = require('./db/seeds');
+const connection = require('./db/connection');
 const loginRouter = require('./controllers/login');
 const rankingRouter = require('./controllers/ranking');
 const playerRouter = require('./controllers/player');
@@ -30,9 +30,8 @@ app.use('/api/players', playerRouter);
 app.get('/', (req, res) => {
   res.send('<h1>Hello World!</h1>');
 });
-console.log('CONNECTING to ', config.MONGOLAB_URL);
-mongoose.connect(config.MONGOLAB_URL);
-mongoose.Promise = global.Promise;
+
+connection.connectToMongoose();
 
 if (process.env.NODE_ENV !== 'test') {
   seeder.seedAdminToDataBase();
@@ -48,7 +47,7 @@ server.listen(PORT, () => {
 });
 
 server.on('close', () => {
-  mongoose.connection.close();
+  connection.disconnectFromMongoose();
 });
 
 module.exports = {
