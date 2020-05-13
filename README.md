@@ -44,10 +44,16 @@ docker exec rankingapp-backend ./node_modules/.bin/jest --config jest.config.js 
 
 ### FRONTEND UNIT TESTS
 
-Requires frontend container running
+Requires frontend container running, run all tests:
 
 ```
 docker exec rankingapp-frontend npm run test
+```
+
+all from single file by defining the describe, for example: 
+
+```
+docker exec rankingapp-frontend npm run test -- -t 'rankingReducer'
 ```
 
 
