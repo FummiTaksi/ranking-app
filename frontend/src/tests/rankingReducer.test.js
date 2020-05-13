@@ -25,12 +25,12 @@ describe('rankingReducer', () => {
     describe('CREATE_RANKING', () => {
       let newState;
       beforeAll(() => {
-        const loadingState = { allRankings: [], selectedRanking: {} , loading: true }
+        const loadingState = { allRankings: [], selectedRanking: {}, loading: true };
         const action = {
           type: 'CREATE_RANKING',
           content: {
-            ranking
-          }
+            ranking,
+          },
         };
         newState = rankingReducer(loadingState, action);
       });
@@ -38,11 +38,10 @@ describe('rankingReducer', () => {
         expect(newState.allRankings.length).toEqual(1);
       });
       it(' puts loading to false', () => {
-        expect(newState.loading).toBeFalsy()
-      })
-    })
-
-  })
+        expect(newState.loading).toBeFalsy();
+      });
+    });
+  });
 
   it(' SETTING_RANKINGS sets loading to true', () => {
     const action = {
@@ -52,12 +51,12 @@ describe('rankingReducer', () => {
     expect(newState.loading).toBeTruthy();
   });
   it(' SET_RANKINGS adds an array of rankings', () => {
-    const rankings = [ranking, ranking]
+    const rankings = [ranking, ranking];
     const action = {
       type: 'SET_RANKINGS',
       content: {
-        rankings
-      }
+        rankings,
+      },
     };
     const newState = rankingReducer(initialState, action);
     expect(newState.allRankings.length).toBe(2);

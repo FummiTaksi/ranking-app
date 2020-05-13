@@ -9,8 +9,8 @@ describe('loginReducer ', () => {
   const loginState = {
     username: 'Admin',
     admin: true,
-    token: 'AdminToken'
-  }
+    token: 'AdminToken',
+  };
   it(' should return a proper initial state when called with undefined state', () => {
     const action = {
       type: 'DO_NOTHING',
