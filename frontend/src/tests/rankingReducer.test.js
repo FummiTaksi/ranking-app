@@ -9,4 +9,18 @@ describe('rankingReducer ', () => {
     const newState = rankingReducer(undefined, action);
     expect(newState).toEqual(initialState);
   });
+  it(' CREATE_RANKING works properly', () => {
+    const ranking = {
+      name: 'reducerTestRanking',
+      _id: '1',
+    };
+    const action = {
+      type: 'CREATE_RANKING',
+      content: {
+        ranking
+      }
+    };
+    const newState = rankingReducer(initialState, action);
+    expect(newState.allRankings.length).toEqual(1);
+  });
 });
