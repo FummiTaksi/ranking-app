@@ -10,6 +10,6 @@ describe('FileService', () => {
   test(' returnDateString returns correct string variable', () => {
     const base64 = testHelpers.getKoskiBase64();
     const string = fileService.returnDateString(base64);
-    expect(string).toEqual('Viimeinen päivitys: Kosken_Malja_GP_su - 06.01.2019');
+    expect(string).toEqual('06.01.2019');
   });
 });
