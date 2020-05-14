@@ -42,6 +42,11 @@ const getRatingBase64 = () => {
   return result;
 };
 
+const getKoskiBase64 = () => {
+  const result = fs.readFileSync('./tests/helpers/rating-files/spring/Koski.txt', 'utf8');
+  return result;
+};
+
 const removePositionsAndRankings = async () => {
   await Position.deleteMany({});
   await Ranking.deleteMany({});
@@ -76,6 +81,7 @@ module.exports = {
   getRankingBody,
   getRankingModelBody,
   getRatingBase64,
+  getKoskiBase64,
   removePositionsAndRankings,
   removePositionsAndRankingsAndPlayers,
   removeUsers,
