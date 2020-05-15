@@ -22,19 +22,18 @@ describe('When user visits players page ', () => {
     await seedRatingExcelToDatabase();
     browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     page = await browser.newPage();
-  });
+  }, timeout);
   test(' it shows correct amount of players', async () => {
     await page.goto('http://frontend:3000/#/');
     await page.waitForSelector('#playerList');
     const textContent = await page.$eval('body', el => el.textContent);
-    const includes = textContent.includes('Showing 7 players that matched your search');
+    const includes = textContent.includes('Showing 921 players that matched your search');
     expect(includes).toBe(true);
   }, timeout);
   test('players info is shown correctly', async () => {
-    const players = await Player.find({});
-    const firstPlayer = players[0];
-    const playerId = firstPlayer._id;
-    const { name } = firstPlayer;
+    const player = await Player.findOne({});
+    const playerId = player._id;
+    const { name } = player;
     await page.goto(`http://frontend:3000/#/players/${playerId}`);
     await page.waitForSelector('#playerView');
     const textContent = await page.$eval('body', el => el.textContent);

@@ -68,9 +68,13 @@ const removeUsersAndSeedAdmin = async () => {
 
 
 const seedRatingExcelToDatabase = async () => {
-  const body = getRankingBody();
-  const base64 = getRatingBase64();
+  const base64 = getKoskiBase64();
   const fileJson = fileService.convertBase64ToExcel(base64);
+  const rankingDate = fileService.returnDateObject(base64);
+  const body = {
+    rankingName: 'Kosken Malja 2019',
+    rankingDate,
+  };
   await rankingService.saveRankingToDatabase(fileJson, body);
 };
 
