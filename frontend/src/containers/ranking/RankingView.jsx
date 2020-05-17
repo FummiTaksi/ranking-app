@@ -98,7 +98,7 @@ class RankingView extends React.Component {
     }
     const orderedPositions = orderPositions(selectedRanking);
     const orderedPositionGroups = orderPositionGroups(orderedPositions);
-    const players = `${selectedRanking.competitionName}, players ${orderedPositions.length}`;
+    const players = `${selectedRanking.competitionName}, players ${orderedPositions.length}, COMPLETED: ${selectedRanking.completed}`;
     const { selectedIndex } = this.state;
     const pageInfo = `Showing page ${selectedIndex + 1} / ${orderedPositionGroups.length}`;
     return (
@@ -125,7 +125,7 @@ RankingView.propTypes = {
   ranking: PropTypes.shape({
     loading: PropTypes.bool,
     allRankings: PropTypes.array,
-    selectedRanking: { positions: PropTypes.array, competitionName: PropTypes.string },
+    selectedRanking: { positions: PropTypes.array, competitionName: PropTypes.string, completed: PropTypes.boolean },
   }).isRequired,
   getRankingById: PropTypes.func.isRequired,
 };
