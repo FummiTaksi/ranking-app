@@ -39,9 +39,8 @@ const deleteRanking = async (rankingId) => {
 };
 
 const returnPositionList = async (rankingJson, rankingId, date) => {
-  const seasonInfo = dateService.getFallAndSpringYears(date);
-  const nameString = `Pelaajalla pitää olla vähintään yksi kisatulos ${seasonInfo} jotta näkyisi tällä listalla`;
-  const noMorePlayers = `Seuraavilla pelaajilla on rating mutta ei yhtään kisatulosta ${seasonInfo} eli eivät mukana ylläolevalla listalla`;
+  const stringObject = dateService.returnDateStringAndNoMorePlayers(date);
+  const { nameString, noMorePlayers } = stringObject;
   let allPlayersSaved = false;
   return rankingJson.reduce(async (positionListPromise, element, index) => {
     const positionList = await positionListPromise;
@@ -70,9 +69,8 @@ const saveRankingToDatabase = async (rankingJson, rankingBody) => {
 };
 
 const checkIfJsonIsValid = (rankingJson, date) => {
-  const seasonInfo = dateService.getFallAndSpringYears(date);
-  const nameString = `Pelaajalla pitää olla vähintään yksi kisatulos ${seasonInfo} jotta näkyisi tällä listalla`;
-  const noMorePlayers = `Seuraavilla pelaajilla on rating mutta ei yhtään kisatulosta ${seasonInfo} eli eivät mukana ylläolevalla listalla`;
+  const stringObject = dateService.returnDateStringAndNoMorePlayers(date);
+  const { nameString, noMorePlayers } = stringObject;
   let fileEnds = false;
   for (let i = 0; i < rankingJson.length; i += 1) {
     if (rankingJson[i][nameString] === noMorePlayers) {

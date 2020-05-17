@@ -12,4 +12,13 @@ const getFallAndSpringYears = (date) => {
   return `(Kevät-${currentYear} tai Syksy-${previousYear})`;
 };
 
-module.exports = { isFall, getFallAndSpringYears };
+const returnDateStringAndNoMorePlayers = (date) => {
+  const seasonInfo = getFallAndSpringYears(date);
+  const nameString = `Pelaajalla pitää olla vähintään yksi kisatulos ${seasonInfo} jotta näkyisi tällä listalla`;
+  const noMorePlayers = `Seuraavilla pelaajilla on rating mutta ei yhtään kisatulosta ${seasonInfo} eli eivät mukana ylläolevalla listalla`;
+  return {
+    nameString,
+    noMorePlayers,
+  };
+};
+module.exports = { isFall, returnDateStringAndNoMorePlayers };
