@@ -74,9 +74,8 @@ const checkIfJsonIsValid = (rankingJson, date) => {
   const nameString = `Pelaajalla pitää olla vähintään yksi kisatulos ${seasonInfo} jotta näkyisi tällä listalla`;
   const noMorePlayers = `Seuraavilla pelaajilla on rating mutta ei yhtään kisatulosta ${seasonInfo} eli eivät mukana ylläolevalla listalla`;
   let fileEnds = false;
-  let jsonObject;
   for (let i = 0; i < rankingJson.length; i += 1) {
-    if (jsonObject[nameString] === noMorePlayers) {
+    if (rankingJson[i][nameString] === noMorePlayers) {
       fileEnds = true;
     }
   }
