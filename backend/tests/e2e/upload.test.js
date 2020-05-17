@@ -9,7 +9,7 @@ const {
 const rankingService = require('../../services/rankingService');
 const {
   getRankingBody,
-  removePositionsAndRankings,
+  removePositionsAndRankingsAndPlayers,
   removeUsers,
   removeUsersAndSeedAdmin,
 } = require('../helpers/testHelpers');
@@ -25,7 +25,7 @@ describe('When user goes to upload page ', () => {
 
   beforeAll(async () => {
     await connectToMongoose();
-    await removePositionsAndRankings();
+    await removePositionsAndRankingsAndPlayers();
     await removeUsersAndSeedAdmin();
     browser = await puppeteer.launch({ args: ['--no-sandbox'] });
     page = await browser.newPage();
@@ -33,7 +33,7 @@ describe('When user goes to upload page ', () => {
 
   describe('and is signed in', () => {
     beforeAll(async () => {
-      await removePositionsAndRankings();
+      await removePositionsAndRankingsAndPlayers();
       await page.goto('http://frontend:3000/#/signin');
       await login(page, process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
     }, timeout);
@@ -55,7 +55,7 @@ describe('When user goes to upload page ', () => {
 
   describe(' and is not signed in', () => {
     beforeAll(async () => {
-      await removePositionsAndRankings();
+      await removePositionsAndRankingsAndPlayers();
       const body = getRankingBody();
       await rankingService.createRanking(body);
       await page.goto('http://frontend:3000/#/');
@@ -74,6 +74,7 @@ describe('When user goes to upload page ', () => {
   afterAll(async () => {
     await browser.close();
     await removeUsers();
+    await removePositionsAndRankingsAndPlayers();
     await disconnectFromMongoose();
   }, timeout);
 });

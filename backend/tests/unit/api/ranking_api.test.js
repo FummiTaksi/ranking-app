@@ -29,7 +29,6 @@ const correctCredentials = () => {
   return {
     rankingFileBase64: base64,
     rankingName: 'Test Cup',
-    rankingDate: new Date(2018, 5, 15),
   };
 };
 
@@ -56,14 +55,6 @@ describe('/api/ranking', () => {
         const rankingResponse = await postNewRanking(missingRankingName, token);
         expect(rankingResponse.status).toEqual(400);
         expect(rankingResponse.body.error).toEqual('Ranking must have a name!');
-      }, apiTestTimeout);
-      test(' body is missing rankingDate', async () => {
-        const missingRankingDate = correctCredentials();
-        missingRankingDate.rankingDate = undefined;
-        const token = await getCorrectToken();
-        const rankingResponse = await postNewRanking(missingRankingDate, token);
-        expect(rankingResponse.status).toEqual(400);
-        expect(rankingResponse.body.error).toEqual('Ranking must have a date!');
       }, apiTestTimeout);
     });
 
