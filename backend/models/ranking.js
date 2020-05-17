@@ -9,6 +9,10 @@ const rankingSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  completed: {
+    type: Boolean,
+    default: false,
+  },
   positions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Position' }],
 });
 
