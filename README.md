@@ -13,6 +13,10 @@ Developed in co-operation with [Finnish table tennis association](http://www.spt
 
 
 
+# DEVELOPMENT
+
+[For decoding excel files to base64](https://www.browserling.com/tools/file-to-base64)
+
 ## HOW TO RUN
 
 Prerequisities: [Docker](https://docs.docker.com/get-docker/)
@@ -70,7 +74,7 @@ docker exec rankingapp-backend npm run test:e2e
 RUN TESTS IN SINGLE FILE:
 
 ```
-docker exec rankingapp-backend ./node_modules/.bin/jest --config jest.config.js --runInBand --forceExit ./tests/e2e/aboutpage.test.js
+docker exec rankingapp-backend ./node_modules/.bin/jest NODE_ENV=e2etest TEST_PORT=3003 --config jest.config.js --runInBand --forceExit ./tests/e2e/aboutpage.test.js
 ```
 
 
