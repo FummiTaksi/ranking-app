@@ -41,9 +41,12 @@ rankingRouter.post('/new', async (request, response) => {
     }
     const json = fileService.convertBase64ToExcel(body.rankingFileBase64);
     const rankingDate = fileService.returnDateObject(body.rankingFileBase64);
-    body.rankingDate = rankingDate;
-    const ranking = await rankingService.saveRankingToDatabase(json, body);
-    return response.status(200).json({ message: 'Ranking was created successfully', ranking });
+    if (rankingService.checkIfJsonIsValid(json, rankingDate)) {
+      body.rankingDate = rankingDate;
+      rankingService.saveRankingToDatabase(json, body);
+      return response.status(200).json({ message: 'Ranking was created successfully', ranking: { body } });
+    }
+    return response.status(400).json({ error: 'File is in wrong format!' });
   } catch (error) {
     console.log('ERROR WHEN CREATING RANKING', error);
     return response.status(400).json(getAccessDeniedMessage());

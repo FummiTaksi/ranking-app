@@ -64,8 +64,23 @@ const saveRankingToDatabase = async (rankingJson, rankingBody) => {
   const createdRanking = await createRanking(rankingBody);
   const positions = await returnPositionList(rankingJson, createdRanking._id, createdRanking.date);
   createdRanking.positions = positions;
+  createdRanking.completed = true;
   const updatedRanking = await Ranking.findByIdAndUpdate(createdRanking._id, createdRanking);
   return updatedRanking;
+};
+
+const checkIfJsonIsValid = (rankingJson, date) => {
+  const seasonInfo = dateService.getFallAndSpringYears(date);
+  const nameString = `Pelaajalla pitää olla vähintään yksi kisatulos ${seasonInfo} jotta näkyisi tällä listalla`;
+  const noMorePlayers = `Seuraavilla pelaajilla on rating mutta ei yhtään kisatulosta ${seasonInfo} eli eivät mukana ylläolevalla listalla`;
+  let fileEnds = false;
+  let jsonObject;
+  for (let i = 0; i < rankingJson.length; i += 1) {
+    if (jsonObject[nameString] === noMorePlayers) {
+      fileEnds = true;
+    }
+  }
+  return fileEnds;
 };
 
 const getRankings = async () => {
@@ -79,5 +94,10 @@ const getRankings = async () => {
 };
 
 module.exports = {
-  saveRankingToDatabase, createRanking, deleteRanking, getRankings, getRanking,
+  saveRankingToDatabase,
+  checkIfJsonIsValid,
+  createRanking,
+  deleteRanking,
+  getRankings,
+  getRanking,
 };
