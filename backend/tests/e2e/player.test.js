@@ -27,7 +27,7 @@ describe('When user visits players page ', () => {
     await page.goto('http://frontend:3000/#/');
     await page.waitForSelector('#playerList');
     const textContent = await page.$eval('body', el => el.textContent);
-    const includes = textContent.includes('Showing 921 players that matched your search');
+    const includes = textContent.includes('Showing 7 players that matched your search');
     expect(includes).toBe(true);
   }, timeout);
   test('players info is shown correctly', async () => {

@@ -33,7 +33,6 @@ const saveRankingWithOnePosition = async () => {
   rankingModel.positions = [positionSaveResponse._id];
   await Ranking.findByIdAndUpdate(savedRanking._id, rankingModel);
 };
-const timeout = 20000;
 
 describe('rankingService ', () => {
   describe(' createRanking ', () => {
@@ -55,30 +54,30 @@ describe('rankingService ', () => {
     beforeAll(async () => {
       await removePositionsAndRankingsAndPlayers();
       await seedRatingExcelToDatabase();
-    }, timeout);
+    });
     afterAll(async () => {
       await removePositionsAndRankingsAndPlayers();
     });
     test(' adds correct amount of positions for ranking to DB', async () => {
       const allPositions = await Position.find({});
-      expect(allPositions.length).toBe(921);
+      expect(allPositions.length).toBe(7);
       const allRankings = await Ranking.find({});
       const savedRanking = allRankings[0];
-      expect(savedRanking.positions.length).toEqual(921);
-    }, timeout);
+      expect(savedRanking.positions.length).toEqual(7);
+    });
     test('adds correct amount of players to DB', async () => {
       const allPlayers = await Player.find({});
-      expect(allPlayers.length).toEqual(921);
-    }, timeout);
+      expect(allPlayers.length).toEqual(7);
+    });
 
     describe('if same ranking is saved twice', () => {
       let allPlayers;
       beforeAll(async () => {
         await seedRatingExcelToDatabase();
         allPlayers = await Player.find({}).populate('positions');
-      }, timeout);
+      });
       test(' players dont duplicate', () => {
-        expect(allPlayers.length).toEqual(921);
+        expect(allPlayers.length).toEqual(7);
       });
       test(' players have two positions', () => {
         expect(allPlayers[0].positions.length).toEqual(2);

@@ -68,7 +68,7 @@ const removeUsersAndSeedAdmin = async () => {
 
 
 const seedRatingExcelToDatabase = async () => {
-  const base64 = getKoskiBase64();
+  const base64 = getRatingBase64();
   const fileJson = fileService.convertBase64ToExcel(base64);
   const rankingDate = fileService.returnDateObject(base64);
   const body = {
