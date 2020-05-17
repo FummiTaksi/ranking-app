@@ -1,11 +1,13 @@
 const supertest = require('supertest');
 const { app, server } = require('../../../index');
+const Ranking = require('../../../models/ranking');
 const {
   getRatingBase64,
   removePositionsAndRankingsAndPlayers,
   apiTestTimeout,
   removeUsers,
   removeUsersAndSeedAdmin,
+  getRankingModelBody,
 } = require('../../helpers/testHelpers');
 
 const api = supertest(app);
@@ -40,6 +42,12 @@ const postNewRanking = async (credentials, token) => {
   return rankingResponse;
 };
 
+const createNewRanking = async () => {
+  const ranking = new Ranking(getRankingModelBody());
+  const saved = await ranking.save();
+  return saved;
+};
+
 describe('/api/ranking', () => {
   describe('/new', () => {
     describe(' returns 400 when ', () => {
@@ -69,21 +77,25 @@ describe('/api/ranking', () => {
   });
 
   describe(' GET /', () => {
+    let ranking;
+    let response;
+    let rankings;
     beforeAll(async () => {
       await removePositionsAndRankingsAndPlayers();
+      ranking = await createNewRanking();
+      response = await api.get('/api/ranking/');
+      ({ rankings } = response.body);
     });
-    test(' returns status 200 and correct amount of rankings ', async () => {
-      const token = await getCorrectToken();
-      await postNewRanking(correctCredentials(), token);
-      const response = await api.get('/api/ranking/').expect(200);
-      expect(response.body.rankings.length).toEqual(1);
+    test(' status is 200 ', async () => {
+      expect(response.status).toEqual(200);
     }, apiTestTimeout);
 
-    test(' returns correct type of positions', async () => {
-      const token = await getCorrectToken();
-      await postNewRanking(correctCredentials(), token);
-      const response = await api.get('/api/ranking/').expect(200);
-      expect(response.body.rankings[0].positions[0].playerName).toEqual('Ykkös Ykkönen');
+    test(' returns correct amount of rankings ', async () => {
+      expect(rankings.length).toEqual(1);
+    }, apiTestTimeout);
+
+    test(' returns correct type of ranking', async () => {
+      expect(rankings[0].competitionName).toEqual(ranking.competitionName);
     }, apiTestTimeout);
 
     afterAll(async () => {
@@ -92,31 +104,34 @@ describe('/api/ranking', () => {
   });
 
   describe(' DELETE /:id ', () => {
+    let ranking;
+    let rankingId;
     beforeAll(async () => {
       await removePositionsAndRankingsAndPlayers();
+      ranking = await createNewRanking();
+      rankingId = ranking._id;
     });
     describe('returns 400 when', () => {
       test(' token is not correct', async () => {
-        const token = await getCorrectToken();
-        const response = await postNewRanking(correctCredentials(), token);
-        const rankingId = response.body.ranking._id;
         await api.delete(`/api/ranking/${rankingId}`).set('Authorization', 'bearer wrongtoken ').expect(400);
       }, apiTestTimeout);
     });
     describe('when given correct credentials', () => {
-      test('status is 200 and body contains deletedRanking', async () => {
+      test('status is 200 and body contains correct id', async () => {
         const token = await getCorrectToken();
-        const response = await postNewRanking(correctCredentials(), token);
-        const rankingId = response.body.ranking._id;
         const deleteResponse = await api.delete(`/api/ranking/${rankingId}`).set('Authorization', `bearer ${token}`).expect(200);
-        expect(deleteResponse.body.deletedRanking).toBeDefined();
+        expect(deleteResponse.body.deletedRanking.competitionName).toBe(ranking.competitionName);
       }, apiTestTimeout);
     });
   });
 
   describe(' GET /:id ', () => {
+    let ranking;
+    let rankingId;
     beforeAll(async () => {
       await removePositionsAndRankingsAndPlayers();
+      ranking = await createNewRanking();
+      rankingId = ranking._id;
     });
     describe('returns 400 when', () => {
       test(' ranking is not found', async () => {
@@ -127,11 +142,8 @@ describe('/api/ranking', () => {
     });
     describe('when given correct credentials', () => {
       test('status is 200 and body contains correct ranking', async () => {
-        const token = await getCorrectToken();
-        const response = await postNewRanking(correctCredentials(), token);
-        const rankingId = response.body.ranking._id;
         const getResponse = await api.get(`/api/ranking/${rankingId}`).expect(200);
-        expect(getResponse.body.ranking).toBeDefined();
+        expect(getResponse.body.ranking.competitionName).toBe(ranking.competitionName);
       }, apiTestTimeout);
     });
   });
