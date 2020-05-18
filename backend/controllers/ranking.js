@@ -19,7 +19,8 @@ rankingRouter.get('/', async (request, response) => {
 rankingRouter.get('/:id', async (request, response) => {
   try {
     const ranking = await rankingService.getRanking(request.params.id);
-    response.status(200).send({ ranking });
+    const percent = ranking.positions.length / ranking.amountOfLines;
+    response.status(200).send({ ranking, percent });
   } catch (error) {
     response.status(400).json({ message: 'Error while getting ranking' });
   }

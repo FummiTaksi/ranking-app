@@ -4,6 +4,7 @@ const Ranking = require('../../../models/ranking');
 const {
   getRatingBase64,
   removePositionsAndRankingsAndPlayers,
+  seedRatingExcelToDatabase,
   apiTestTimeout,
   removeUsers,
   removeUsersAndSeedAdmin,
@@ -149,7 +150,7 @@ describe('/api/ranking', () => {
     let rankingId;
     beforeAll(async () => {
       await removePositionsAndRankingsAndPlayers();
-      ranking = await createNewRanking();
+      ranking = await seedRatingExcelToDatabase();
       rankingId = ranking._id;
     });
     describe('returns 400 when', () => {
@@ -159,11 +160,24 @@ describe('/api/ranking', () => {
         await api.get('/api/ranking/wrongId').expect(400);
       }, apiTestTimeout);
     });
-    describe('when given correct credentials', () => {
-      test('status is 200 and body contains correct ranking', async () => {
-        const getResponse = await api.get(`/api/ranking/${rankingId}`).expect(200);
-        expect(getResponse.body.ranking.competitionName).toBe(ranking.competitionName);
-      }, apiTestTimeout);
+    describe('when given correct credentials ', () => {
+      let response;
+      beforeAll(async () => {
+        response = await api.get(`/api/ranking/${rankingId}`);
+      });
+      test('status is 200', () => {
+        expect(response.status).toBe(200);
+      });
+      test('competitionName is correct', () => {
+        expect(response.body.ranking.competitionName).toBe(ranking.competitionName);
+      });
+      test('amountOfLines is correct', () => {
+        expect(response.body.ranking.amountOfLines).toBe(ranking.amountOfLines);
+      });
+      test(' percent is correct', () => {
+        const percent = ranking.positions.length / ranking.amountOfLines;
+        expect(response.body.percent).toBe(percent);
+      });
     });
   });
 });
