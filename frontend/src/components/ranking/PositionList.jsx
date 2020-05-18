@@ -21,7 +21,7 @@ const renderPositionCell = positionObject => (
 
 function PositionList({ positions }) {
   if (!positions) {
-    return <p>Loading positions...</p>
+    return <p>Loading positions...</p>;
   }
   return (
     <div>
@@ -51,7 +51,7 @@ function PositionList({ positions }) {
 }
 
 PositionList.propTypes = {
-  positions: PropTypes.arrayOf(PropTypes.object),
+  positions: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export default PositionList;

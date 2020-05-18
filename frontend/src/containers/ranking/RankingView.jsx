@@ -102,10 +102,9 @@ class RankingView extends React.Component {
     const players = `${selectedRanking.competitionName}, players ${orderedPositions.length}`;
     const { selectedIndex } = this.state;
     const pageInfo = `Showing page ${selectedIndex + 1} / ${orderedPositionGroups.length}`;
-    const percent = orderedPositions.length / selectedRanking.amountOfLines;
     return (
       <div>
-        <AdminPanel completed={selectedRanking.completed} percent={percent} />
+        <AdminPanel completed={selectedRanking.completed} />
         <h3>
           {players}
         </h3>
@@ -116,7 +115,6 @@ class RankingView extends React.Component {
         <PositionList positions={orderedPositionGroups[selectedIndex]} />
         {this.renderNavigationButtons(orderedPositionGroups.length)}
       </div>
-
     );
   }
 }
