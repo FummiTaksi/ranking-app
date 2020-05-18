@@ -125,7 +125,11 @@ RankingView.propTypes = {
   ranking: PropTypes.shape({
     loading: PropTypes.bool,
     allRankings: PropTypes.array,
-    selectedRanking: { positions: PropTypes.array, competitionName: PropTypes.string, completed: PropTypes.boolean },
+    selectedRanking: {
+      positions: PropTypes.array,
+      competitionName: PropTypes.string,
+      completed: PropTypes.boolean,
+    },
   }).isRequired,
   getRankingById: PropTypes.func.isRequired,
 };
