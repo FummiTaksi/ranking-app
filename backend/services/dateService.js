@@ -21,4 +21,4 @@ const returnDateStringAndNoMorePlayers = (date) => {
     noMorePlayers,
   };
 };
-module.exports = { isFall, returnDateStringAndNoMorePlayers };
+module.exports = { returnDateStringAndNoMorePlayers };
