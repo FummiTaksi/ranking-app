@@ -4,6 +4,7 @@ import { Button, Icon } from 'semantic-ui-react';
 import PropTypes from 'prop-types';
 import { getRanking } from '../../reducers/rankingReducer';
 import PositionList from '../../components/ranking/PositionList';
+import AdminPanel from './AdminPanel';
 
 const orderPositions = (selectedRanking) => {
   const copyList = selectedRanking.positions.slice();
@@ -98,11 +99,12 @@ class RankingView extends React.Component {
     }
     const orderedPositions = orderPositions(selectedRanking);
     const orderedPositionGroups = orderPositionGroups(orderedPositions);
-    const players = `${selectedRanking.competitionName}, players ${orderedPositions.length}, COMPLETED: ${selectedRanking.completed}`;
+    const players = `${selectedRanking.competitionName}, players ${orderedPositions.length}`;
     const { selectedIndex } = this.state;
     const pageInfo = `Showing page ${selectedIndex + 1} / ${orderedPositionGroups.length}`;
     return (
       <div>
+        <AdminPanel completed={selectedRanking.completed} />
         <h3>
           {players}
         </h3>
