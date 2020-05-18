@@ -43,8 +43,9 @@ rankingRouter.post('/new', async (request, response) => {
     const rankingDate = fileService.returnDateObject(body.rankingFileBase64);
     if (rankingService.checkIfJsonIsValid(json, rankingDate)) {
       body.rankingDate = rankingDate;
-      rankingService.saveRankingToDatabase(json, body);
-      return response.status(200).json({ message: 'Ranking was created successfully', ranking: { body } });
+      const ranking = await rankingService.createRanking(body);
+      rankingService.addPositionsForRanking(ranking, json);
+      return response.status(200).json({ message: 'Ranking was created successfully', ranking });
     }
     return response.status(400).json({ error: 'File is in wrong format!' });
   } catch (error) {
