@@ -7,6 +7,7 @@ const {
   rankingExists,
 } = require('./helper');
 const rankingService = require('../../services/rankingService');
+const Ranking = require('../../models/ranking');
 const {
   getRankingBody,
   removePositionsAndRankingsAndPlayers,
@@ -41,14 +42,16 @@ describe('When user goes to upload page ', () => {
     test(' ranking which is in spring can be created', async () => {
       const koskenMalja = 'Kosken malja GP';
       await uploadKoskenMaljaRanking(page, koskenMalja);
-      const exists = await rankingExists(page, koskenMalja);
+      const ranking = await Ranking.findOne({ competitionName: koskenMalja });
+      const exists = await rankingExists(page, ranking._id);
       expect(exists).toBeTruthy();
     }, timeout);
 
     test(' ranking which is in fall can be created', async () => {
       const tikakoski = 'Tikakoski GP';
       await uploadTikakoskiRanking(page, tikakoski);
-      const exists = await rankingExists(page, tikakoski);
+      const ranking = await Ranking.findOne({ competitionName: tikakoski });
+      const exists = await rankingExists(page, ranking._id);
       expect(exists).toBeTruthy();
     }, timeout);
   });

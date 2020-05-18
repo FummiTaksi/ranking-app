@@ -25,11 +25,11 @@ const uploadTikakoskiRanking = async (page, rankingName) => {
   await uploadRanking(page, './tests/helpers/rating-files/fall/3282_Tikakoski_GP_su.xls', rankingName);
 };
 
-const rankingExists = async (page, rankingName) => {
-  await page.goto('http://frontend:3000/#/rankings');
-  await page.waitForSelector('#rankingList');
+const rankingExists = async (page, rankingId) => {
+  await page.goto(`http://frontend:3000/#/rankings/${rankingId}`);
+  await page.waitForSelector('#completed');
   const textContent = await page.$eval('body', el => el.textContent);
-  return textContent.includes(rankingName);
+  return textContent.includes('Upload completed');
 };
 
 module.exports = {
