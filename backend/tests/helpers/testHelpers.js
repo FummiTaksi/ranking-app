@@ -75,7 +75,8 @@ const seedRatingExcelToDatabase = async () => {
     rankingName: 'Kosken Malja 2019',
     rankingDate,
   };
-  await rankingService.saveRankingToDatabase(fileJson, body);
+  const ranking = await rankingService.createRanking(body);
+  await rankingService.addPositionsForRanking(ranking, fileJson);
 };
 
 const apiTestTimeout = 10000;

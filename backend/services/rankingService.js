@@ -59,12 +59,13 @@ const returnPositionList = async (rankingJson, rankingId, date) => {
     return positionList;
   }, Promise.resolve([]));
 };
-const saveRankingToDatabase = async (rankingJson, rankingBody) => {
-  const createdRanking = await createRanking(rankingBody);
-  const positions = await returnPositionList(rankingJson, createdRanking._id, createdRanking.date);
-  createdRanking.positions = positions;
-  createdRanking.completed = true;
-  const updatedRanking = await Ranking.findByIdAndUpdate(createdRanking._id, createdRanking);
+
+const addPositionsForRanking = async (createdRanking, rankingJson) => {
+  const ranking = createdRanking;
+  const positions = await returnPositionList(rankingJson, ranking._id, ranking.date);
+  ranking.positions = positions;
+  ranking.completed = true;
+  const updatedRanking = await Ranking.findByIdAndUpdate(ranking._id, ranking);
   return updatedRanking;
 };
 
@@ -91,7 +92,7 @@ const getRankings = async () => {
 };
 
 module.exports = {
-  saveRankingToDatabase,
+  addPositionsForRanking,
   checkIfJsonIsValid,
   createRanking,
   deleteRanking,

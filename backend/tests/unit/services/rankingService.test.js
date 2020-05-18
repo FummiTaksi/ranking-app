@@ -50,10 +50,13 @@ describe('rankingService ', () => {
     });
   });
 
-  describe('saveRankingToDatabase ', () => {
+  describe('addPositionsForRanking  ', () => {
+    let savedRanking;
     beforeAll(async () => {
       await removePositionsAndRankingsAndPlayers();
       await seedRatingExcelToDatabase();
+      const allRankings = await Ranking.find({});
+      ([savedRanking] = allRankings);
     });
     afterAll(async () => {
       await removePositionsAndRankingsAndPlayers();
@@ -61,9 +64,10 @@ describe('rankingService ', () => {
     test(' adds correct amount of positions for ranking to DB', async () => {
       const allPositions = await Position.find({});
       expect(allPositions.length).toBe(7);
-      const allRankings = await Ranking.find({});
-      const savedRanking = allRankings[0];
       expect(savedRanking.positions.length).toEqual(7);
+    });
+    test(' is completed', () => {
+      expect(savedRanking.completed).toBeTruthy();
     });
     test('adds correct amount of players to DB', async () => {
       const allPlayers = await Player.find({});
