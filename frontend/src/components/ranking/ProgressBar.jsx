@@ -5,7 +5,7 @@ function ProgressBar({ completed }) {
   return (
     <h1>{`Is this ranking completed: ${completed}`}</h1>
   );
-};
+}
 
 ProgressBar.propTypes = {
   completed: PropTypes.bool.isRequired,
