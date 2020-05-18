@@ -33,6 +33,7 @@ const getRankingBody = () => {
   const rankingBody = {
     rankingDate: new Date(2018, 5, 15),
     rankingName: 'Test Rank',
+    amountOfLines: 7,
   };
   return rankingBody;
 };

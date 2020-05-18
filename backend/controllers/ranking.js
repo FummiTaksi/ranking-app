@@ -44,6 +44,7 @@ rankingRouter.post('/new', async (request, response) => {
     const object = rankingService.checkIfJsonIsValid(json, rankingDate);
     if (object.fileEnds) {
       body.rankingDate = rankingDate;
+      body.amountOfLines = object.index;
       const ranking = await rankingService.createRanking(body);
       rankingService.addPositionsForRanking(ranking, json);
       return response.status(202).json({ message: 'Ranking was created successfully', ranking });
