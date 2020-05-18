@@ -23,6 +23,7 @@ const getPositionModelBody = (rankingId, playerId) => {
 const getRankingModelBody = () => ({
   date: new Date(2018, 5, 15),
   competitionName: 'Test Competition',
+  amountOfLines: 7,
 });
 
 const getPlayerModelBody = () => ({
