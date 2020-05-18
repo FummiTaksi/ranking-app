@@ -45,7 +45,7 @@ rankingRouter.post('/new', async (request, response) => {
       body.rankingDate = rankingDate;
       const ranking = await rankingService.createRanking(body);
       rankingService.addPositionsForRanking(ranking, json);
-      return response.status(200).json({ message: 'Ranking was created successfully', ranking });
+      return response.status(202).json({ message: 'Ranking was created successfully', ranking });
     }
     return response.status(400).json({ error: 'File is in wrong format!' });
   } catch (error) {

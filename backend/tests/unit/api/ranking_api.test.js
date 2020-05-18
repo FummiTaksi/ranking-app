@@ -50,29 +50,48 @@ const createNewRanking = async () => {
 
 describe('/api/ranking', () => {
   describe('/new', () => {
-    describe(' returns 400 when ', () => {
-      test(' token is not correct', async () => {
-        const response = await postNewRanking(correctCredentials(), 'bearer wrongtoken');
-        expect(response.status).toEqual(400);
-        expect(response.body.error).toEqual('You must be signed in admin to create new ranking!');
-      }, apiTestTimeout);
-      test(' body is missing rankingName', async () => {
-        const missingRankingName = correctCredentials();
-        missingRankingName.rankingName = undefined;
-        const token = await getCorrectToken();
-        const rankingResponse = await postNewRanking(missingRankingName, token);
-        expect(rankingResponse.status).toEqual(400);
-        expect(rankingResponse.body.error).toEqual('Ranking must have a name!');
-      }, apiTestTimeout);
+    describe('with incorrect credentials ', () => {
+      describe('token is not correct ', () => {
+        let response;
+        beforeAll(async () => {
+          response = await postNewRanking(correctCredentials(), 'bearer wrongtoken');
+        });
+        test(' status is 400', () => {
+          expect(response.status).toEqual(400);
+        });
+        test(' error message is correct', () => {
+          expect(response.body.error).toEqual('You must be signed in admin to create new ranking!');
+        });
+      });
+      describe('body is missing rankingName ', () => {
+        let response;
+        beforeAll(async () => {
+          const missingRankingName = correctCredentials();
+          missingRankingName.rankingName = undefined;
+          const token = await getCorrectToken();
+          response = await postNewRanking(missingRankingName, token);
+        });
+        test(' status is 400', () => {
+          expect(response.status).toEqual(400);
+        });
+        test(' error message is correct', () => {
+          expect(response.body.error).toEqual('Ranking must have a name!');
+        });
+      });
     });
 
-    describe(' returns 200 when ', () => {
-      test(' body contains correct credentials', async () => {
+    describe(' with correct body', () => {
+      let response;
+      beforeAll(async () => {
         const token = await getCorrectToken();
-        const response = await postNewRanking(correctCredentials(), token);
-        expect(response.status).toEqual(200);
+        response = await postNewRanking(correctCredentials(), token);
+      });
+      test(' status is 202 ', () => {
+        expect(response.status).toEqual(202);
+      });
+      test(' response contains correct competitionName ', () => {
         expect(response.body.ranking.competitionName).toEqual('Test Cup');
-      }, apiTestTimeout);
+      });
     });
   });
 
