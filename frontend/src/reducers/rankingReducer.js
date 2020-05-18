@@ -48,7 +48,7 @@ export const createRanking = createContent => async (dispatch) => {
     });
     const response = await rankingService.createRanking(createContent);
     const header = `Ranking ${createContent.rankingName} was created succsefully!`;
-    const content = 'Click Rankings to view ranking you created.';
+    const content = 'View the ranking to see that the installation was successful';
     const icon = 'thumbs up';
     dispatch({
       type: 'CREATE_RANKING',
