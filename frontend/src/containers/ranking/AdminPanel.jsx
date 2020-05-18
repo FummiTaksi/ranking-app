@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import ProgressBar from '../../components/ranking/ProgressBar';
 
-function AdminPanel({ credentials, completed }) {
+function AdminPanel({ credentials, completed, percent }) {
   const { admin } = credentials;
   if (admin) {
     return (
-      <ProgressBar completed={completed} />
+      <ProgressBar completed={completed} percent={percent} />
     );
   }
   return null;
@@ -18,6 +18,7 @@ AdminPanel.propTypes = {
     admin: PropTypes.bool,
   }).isRequired,
   completed: PropTypes.bool.isRequired,
+  percent: PropTypes.number.isRequired,
 };
 
 const mapStateToProps = state => ({ credentials: state.login });
