@@ -19,7 +19,6 @@ const createRanking = async (rankingBody) => {
   const rankingModel = {
     competitionName: rankingBody.rankingName,
     date: rankingBody.rankingDate,
-    amountOfLines: rankingBody.amountOfLines,
   };
   const ranking = new Ranking(rankingModel);
   const response = await ranking.save();

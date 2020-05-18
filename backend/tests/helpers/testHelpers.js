@@ -23,7 +23,6 @@ const getPositionModelBody = (rankingId, playerId) => {
 const getRankingModelBody = () => ({
   date: new Date(2018, 5, 15),
   competitionName: 'Test Competition',
-  amountOfLines: 7,
 });
 
 const getPlayerModelBody = () => ({
@@ -34,7 +33,6 @@ const getRankingBody = () => {
   const rankingBody = {
     rankingDate: new Date(2018, 5, 15),
     rankingName: 'Test Rank',
-    amountOfLines: 7,
   };
   return rankingBody;
 };
@@ -76,7 +74,6 @@ const seedRatingExcelToDatabase = async () => {
   const body = {
     rankingName: 'Kosken Malja 2019',
     rankingDate,
-    amountOfLines: 7,
   };
   const ranking = await rankingService.createRanking(body);
   await rankingService.addPositionsForRanking(ranking, fileJson);

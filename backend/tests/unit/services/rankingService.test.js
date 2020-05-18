@@ -36,12 +36,11 @@ const saveRankingWithOnePosition = async () => {
 
 describe('rankingService ', () => {
   describe(' createRanking ', () => {
-    let ranking;
     let body;
     beforeAll(async () => {
       await removePositionsAndRankingsAndPlayers();
       body = getRankingBody();
-      ranking = await rankingService.createRanking(body);
+      await rankingService.createRanking(body);
     });
     afterAll(async () => {
       await removePositionsAndRankingsAndPlayers();
@@ -49,9 +48,6 @@ describe('rankingService ', () => {
     test(' creates ranking with correct body', async () => {
       const allRankings = await Ranking.find({});
       expect(allRankings.length).toBe(1);
-    });
-    test('ranking has correct amount of indexes', () => {
-      expect(ranking.amountOfLines).toBe(body.amountOfLines);
     });
   });
 

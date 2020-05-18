@@ -13,9 +13,6 @@ const rankingSchema = new mongoose.Schema({
     type: Boolean,
     default: false,
   },
-  amountOfLines: {
-    type: Number,
-  },
   positions: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Position' }],
 });
 

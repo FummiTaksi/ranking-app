@@ -19,8 +19,7 @@ rankingRouter.get('/', async (request, response) => {
 rankingRouter.get('/:id', async (request, response) => {
   try {
     const ranking = await rankingService.getRanking(request.params.id);
-    const percent = ranking.positions.length / ranking.amountOfLines;
-    response.status(200).send({ ranking, percent });
+    response.status(200).send({ ranking });
   } catch (error) {
     response.status(400).json({ message: 'Error while getting ranking' });
   }
@@ -45,7 +44,6 @@ rankingRouter.post('/new', async (request, response) => {
     const object = rankingService.checkIfJsonIsValid(json, rankingDate);
     if (object.fileEnds) {
       body.rankingDate = rankingDate;
-      body.amountOfLines = object.index;
       const ranking = await rankingService.createRanking(body);
       rankingService.addPositionsForRanking(ranking, json);
       return response.status(202).json({ message: 'Ranking was created successfully', ranking });

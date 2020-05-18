@@ -171,13 +171,6 @@ describe('/api/ranking', () => {
       test('competitionName is correct', () => {
         expect(response.body.ranking.competitionName).toBe(ranking.competitionName);
       });
-      test('amountOfLines is correct', () => {
-        expect(response.body.ranking.amountOfLines).toBe(ranking.amountOfLines);
-      });
-      test(' percent is correct', () => {
-        const percent = ranking.positions.length / ranking.amountOfLines;
-        expect(response.body.percent).toBe(percent);
-      });
     });
   });
 });
