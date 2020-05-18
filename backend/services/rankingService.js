@@ -73,12 +73,16 @@ const checkIfJsonIsValid = (rankingJson, date) => {
   const stringObject = dateService.returnDateStringAndNoMorePlayers(date);
   const { nameString, noMorePlayers } = stringObject;
   let fileEnds = false;
-  for (let i = 0; i < rankingJson.length; i += 1) {
-    if (rankingJson[i][nameString] === noMorePlayers) {
+  let index = 0;
+  for (index = 0; index < rankingJson.length; index += 1) {
+    if (rankingJson[index][nameString] === noMorePlayers) {
       fileEnds = true;
     }
   }
-  return fileEnds;
+  return {
+    fileEnds,
+    index,
+  };
 };
 
 const getRankings = async () => {
