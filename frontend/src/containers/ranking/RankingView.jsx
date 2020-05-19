@@ -80,7 +80,7 @@ class RankingView extends React.Component {
     const { ranking } = this.props;
     if (ranking.loading) {
       return (
-        <div className="ui segment">
+        <div id="loadingRanking" className="ui segment">
           <div className="ui active inverted dimmer">
             <div className="ui textloader">
               Loading ranking from database
@@ -103,9 +103,9 @@ class RankingView extends React.Component {
     const { selectedIndex } = this.state;
     const pageInfo = `Showing page ${selectedIndex + 1} / ${orderedPositionGroups.length}`;
     return (
-      <div>
+      <div id="rankingView">
         <AdminPanel completed={selectedRanking.completed} />
-        <h3>
+        <h3 id="rankingInfo">
           {players}
         </h3>
         <h4>

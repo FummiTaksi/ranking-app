@@ -116,22 +116,39 @@ class RankingForm extends React.Component {
     );
   }
 
-  renderFileUploadingForm() {
+  renderLoadingInfo(ranking) {
+    if (ranking.loading) {
+      return (
+        <div id="rankingFormCreating">
+          <p>Creating ranking...</p>
+        </div>
+      )
+    }
+    return (
+      <div id="rankingFormComplete">
+        <p>Loading complete</p>
+      </div>
+    )
+
+  }
+
+  renderFileUploadingForm(ranking) {
     return (
       <div>
         {this.renderDropzone()}
         {this.renderDroppedFileName()}
         {this.renderUploadForm()}
+        {this.renderLoadingInfo(ranking)}
       </div>
     );
   }
 
   render() {
-    const { credentials } = this.props;
+    const { credentials, ranking } = this.props;
     const { admin } = credentials;
     return (
       <div>
-        {admin && this.renderFileUploadingForm()}
+        {admin && this.renderFileUploadingForm(ranking)}
         {!admin && youAreNotAllowed()}
       </div>
     );
@@ -143,13 +160,22 @@ RankingForm.propTypes = {
   credentials: PropTypes.shape({
     admin: PropTypes.bool,
   }).isRequired,
+  ranking: PropTypes.shape({
+    loading: PropTypes.bool,
+    allRankings: PropTypes.array,
+    selectedRanking: {
+      positions: PropTypes.array,
+      competitionName: PropTypes.string,
+      completed: PropTypes.boolean,
+    },
+  }).isRequired,
 };
 
 const mapDispatchToProps = {
   createNewRanking: createRanking,
 };
 
-const mapStateToProps = state => ({ credentials: state.login });
+const mapStateToProps = state => ({ credentials: state.login, ranking: state.ranking });
 
 const connectedRankingForm = connect(mapStateToProps, mapDispatchToProps)(RankingForm);
 

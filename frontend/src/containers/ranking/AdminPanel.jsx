@@ -7,7 +7,9 @@ function AdminPanel({ credentials, completed }) {
   const { admin } = credentials;
   if (admin) {
     return (
-      <ProgressBar completed={completed} />
+      <div id="adminPanel">
+        <ProgressBar completed={completed} />
+      </div>
     );
   }
   return null;
