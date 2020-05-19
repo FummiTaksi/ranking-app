@@ -39,7 +39,7 @@ describe('When user goes to upload page ', () => {
       await login(page, process.env.ADMIN_USERNAME, process.env.ADMIN_PASSWORD);
     }, timeout);
 
-    test.only(' ranking which is in spring can be created', async () => {
+    test(' ranking which is in spring can be created', async () => {
       const koskenMalja = 'Kosken malja GP';
       await uploadKoskenMaljaRanking(page, koskenMalja);
       const ranking = await Ranking.findOne({ competitionName: koskenMalja });

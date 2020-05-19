@@ -1,9 +1,10 @@
+/* eslint-disable no-await-in-loop */
 const login = async (page, username, password) => {
   await page.type('input', username);
   await page.type('input[type=password]', password);
   await page.click('button');
 };
-const timeout = 10000;
+const timeout = 60000;
 
 const uploadRanking = async (page, filePath, rankingName) => {
   await page.goto('http://frontend:3000/#/upload');
@@ -26,20 +27,15 @@ const uploadTikakoskiRanking = async (page, rankingName) => {
 
 const rankingExists = async (page, rankingId) => {
   let completed = false;
+  await page.goto(`http://frontend:3000/#/rankings/${rankingId}`);
   while (!completed) {
-    await page.goto(`http://frontend:3000/#/rankings/${rankingId}`);
+    await page.reload({ options: { waitUntil: 'networkidle2' } });
     await page.waitForSelector('#adminPanel');
     const content = await page.$eval('body', el => el.textContent);
-    console.log('content', content);
-    if (content.includes('Uploading complete')) {
-      console.log('it includes Completed true!');
-      completed = true;
-    }
+    completed = content.includes('Uploading complete');
   }
-  console.log('outside loop');
   await page.waitForSelector('#completed');
   const textContent = await page.$eval('body', el => el.textContent);
-  console.log('probably returning true with this content!', textContent);
   return textContent.includes('Uploading complete');
 };
 
