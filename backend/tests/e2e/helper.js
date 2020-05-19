@@ -3,11 +3,10 @@ const login = async (page, username, password) => {
   await page.type('input[type=password]', password);
   await page.click('button');
 };
-const timeout = 200000;
+const timeout = 10000;
 
 const uploadRanking = async (page, filePath, rankingName) => {
   await page.goto('http://frontend:3000/#/upload');
-  await page.waitForSelector('.success', { hidden: true }, timeout);
   await page.waitForSelector('#fileDrop');
   const fileEle = await page.$('input[type="file"]');
   await fileEle.uploadFile(filePath);
@@ -15,7 +14,7 @@ const uploadRanking = async (page, filePath, rankingName) => {
   await page.type('input[name=rankingName]', rankingName);
   await page.waitForSelector('button[type=submit]');
   await page.click('button[type=submit]');
-  await page.waitForSelector('.success', timeout);
+  await page.waitForSelector('#rankingFormComplete');
 };
 const uploadKoskenMaljaRanking = async (page, rankingName) => {
   await uploadRanking(page, './tests/helpers/rating-files/spring/3321_Kosken_Malja_GP_su.xls', rankingName);
@@ -26,10 +25,22 @@ const uploadTikakoskiRanking = async (page, rankingName) => {
 };
 
 const rankingExists = async (page, rankingId) => {
-  await page.goto(`http://frontend:3000/#/rankings/${rankingId}`);
+  let completed = false;
+  while (!completed) {
+    await page.goto(`http://frontend:3000/#/rankings/${rankingId}`);
+    await page.waitForSelector('#adminPanel');
+    const content = await page.$eval('body', el => el.textContent);
+    console.log('content', content);
+    if (content.includes('Uploading complete')) {
+      console.log('it includes Completed true!');
+      completed = true;
+    }
+  }
+  console.log('outside loop');
   await page.waitForSelector('#completed');
   const textContent = await page.$eval('body', el => el.textContent);
-  return textContent.includes('Upload completed');
+  console.log('probably returning true with this content!', textContent);
+  return textContent.includes('Uploading complete');
 };
 
 module.exports = {
