@@ -6,8 +6,8 @@ function ProgressBar({ completed }) {
     return (
       <div id="completed">
         <h1>Uploading complete</h1>
-      </div> 
-    )
+      </div>
+    );
   }
   return (
     <div id="notCompleted">

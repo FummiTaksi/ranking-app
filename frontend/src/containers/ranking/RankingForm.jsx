@@ -11,6 +11,21 @@ const youAreNotAllowed = () => (
   </h3>
 );
 
+const renderLoadingInfo = (ranking) => {
+  if (ranking.loading) {
+    return (
+      <div id="rankingFormCreating">
+        <p>Creating ranking...</p>
+      </div>
+    );
+  }
+  return (
+    <div id="rankingFormComplete">
+      <p>Loading complete</p>
+    </div>
+  );
+};
+
 class RankingForm extends React.Component {
   constructor() {
     super();
@@ -116,29 +131,13 @@ class RankingForm extends React.Component {
     );
   }
 
-  renderLoadingInfo(ranking) {
-    if (ranking.loading) {
-      return (
-        <div id="rankingFormCreating">
-          <p>Creating ranking...</p>
-        </div>
-      )
-    }
-    return (
-      <div id="rankingFormComplete">
-        <p>Loading complete</p>
-      </div>
-    )
-
-  }
-
   renderFileUploadingForm(ranking) {
     return (
       <div>
         {this.renderDropzone()}
         {this.renderDroppedFileName()}
         {this.renderUploadForm()}
-        {this.renderLoadingInfo(ranking)}
+        {renderLoadingInfo(ranking)}
       </div>
     );
   }
