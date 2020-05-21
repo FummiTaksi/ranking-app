@@ -79,10 +79,7 @@ const checkIfJsonIsValid = (rankingJson, date) => {
       fileEnds = true;
     }
   }
-  return {
-    fileEnds,
-    index,
-  };
+  return fileEnds;
 };
 
 const getRankings = async () => {

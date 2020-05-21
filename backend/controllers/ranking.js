@@ -41,13 +41,14 @@ rankingRouter.post('/new', async (request, response) => {
     }
     const json = fileService.convertBase64ToExcel(body.rankingFileBase64);
     const rankingDate = fileService.returnDateObject(body.rankingFileBase64);
-    const object = rankingService.checkIfJsonIsValid(json, rankingDate);
-    if (object.fileEnds) {
+    const valid = rankingService.checkIfJsonIsValid(json, rankingDate);
+    if (valid) {
       body.rankingDate = rankingDate;
       const ranking = await rankingService.createRanking(body);
       rankingService.addPositionsForRanking(ranking, json);
       return response.status(202).json({ message: 'Ranking was created successfully', ranking });
     }
+    console.log('JSON WAS NOT VALID');
     return response.status(400).json({ error: 'File is in wrong format!' });
   } catch (error) {
     console.log('ERROR WHEN CREATING RANKING', error);
