@@ -110,7 +110,7 @@ docker exec rankingapp-frontend npm run lint
 
 ## AUDIT
 
-To find vulnerabilties, for backend
+To find vulnerabilties in npm packages, for backend
 ````
 docker exec rankingapp-backend npm audit
 ````
