@@ -87,7 +87,7 @@ connect("mongodb://database:27017")
 use devDB
 ````
 
-now you can query the db, for example
+now you can run queries, for example
 
 ```
 show collections
