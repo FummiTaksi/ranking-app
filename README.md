@@ -21,6 +21,8 @@ Developed in co-operation with [Finnish table tennis association](http://www.spt
 
 Prerequisities: [Docker](https://docs.docker.com/get-docker/)
 
+Copy the content from `.env.dist` to `.env` in the root of repository, and add correct credentials 
+
 Run the following in the root of this repository
 
 ```
