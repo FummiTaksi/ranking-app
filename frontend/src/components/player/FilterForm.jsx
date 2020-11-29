@@ -5,7 +5,7 @@ import { Input } from 'semantic-ui-react';
 function FilterForm({ handleNameChange, playerName }) {
   return (
     <div>
-    Name:
+      Name:
       <Input type="text" onChange={handleNameChange} value={playerName} text="Name" />
     </div>
   );
