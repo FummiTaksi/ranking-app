@@ -56,7 +56,7 @@ PlayerView.propTypes = {
   player: PropTypes.shape({
     loading: PropTypes.bool,
     error: PropTypes.bool,
-    players: PropTypes.array,
+    players: PropTypes.arrayOf(PropTypes.any),
     selectedPlayer: {
       name: PropTypes.string, position: PropTypes.number, rating: PropTypes.number,
     },

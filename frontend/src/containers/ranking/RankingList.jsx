@@ -118,7 +118,8 @@ RankingList.propTypes = {
     admin: PropTypes.bool,
   }).isRequired,
   ranking: PropTypes.shape({
-    allRankings: PropTypes.array,
+    allRankings: PropTypes.arrayOf(PropTypes.any),
+    loading: PropTypes.bool,
   }).isRequired,
 };
 

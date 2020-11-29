@@ -68,7 +68,7 @@ class PlayerPage extends React.Component {
     if (player.error) {
       return (
         <p>
-           Error
+          Error
         </p>
       );
     }
@@ -87,7 +87,7 @@ class PlayerPage extends React.Component {
 PlayerPage.propTypes = {
   getAllPlayers: PropTypes.func.isRequired,
   player: PropTypes.shape({
-    players: PropTypes.array.isRequired,
+    players: PropTypes.arrayOf(PropTypes.any).isRequired,
     error: PropTypes.bool.isRequired,
     loading: PropTypes.bool.isRequired,
   }).isRequired,

@@ -161,9 +161,9 @@ RankingForm.propTypes = {
   }).isRequired,
   ranking: PropTypes.shape({
     loading: PropTypes.bool,
-    allRankings: PropTypes.array,
+    allRankings: PropTypes.arrayOf(PropTypes.any),
     selectedRanking: {
-      positions: PropTypes.array,
+      positions: PropTypes.arrayOf(PropTypes.any),
       competitionName: PropTypes.string,
       completed: PropTypes.boolean,
     },
