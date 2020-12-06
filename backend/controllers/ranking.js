@@ -1,8 +1,7 @@
-const jwt = require('jsonwebtoken');
 const rankingRouter = require('express').Router();
-const User = require('../models/user');
 const fileService = require('../services/fileService');
 const rankingService = require('../services/rankingService');
+const { requireAdminAccess } = require('../middlewares/middlewares');
 
 const getAccessDeniedMessage = () => ({ error: 'You must be signed in admin to create new ranking!' });
 
@@ -25,17 +24,9 @@ rankingRouter.get('/:id', async (request, response) => {
   }
 });
 
-rankingRouter.post('/new', async (request, response) => {
+rankingRouter.post('/new', requireAdminAccess, async (request, response) => {
   try {
-    const { token, body } = request;
-    const decodedToken = jwt.verify(token, process.env.SECRET);
-    if (!token || !decodedToken.id) {
-      return response.status(401).json(getAccessDeniedMessage());
-    }
-    const userWhoAddedRanking = await User.findById(decodedToken.id);
-    if (!userWhoAddedRanking.admin) {
-      return response.status(401).json(getAccessDeniedMessage());
-    }
+    const { body } = request;
     if (!body.rankingName) {
       return response.status(400).json({ error: 'Ranking must have a name!' });
     }
@@ -56,17 +47,8 @@ rankingRouter.post('/new', async (request, response) => {
   }
 });
 
-rankingRouter.delete('/:id', async (request, response) => {
+rankingRouter.delete('/:id', requireAdminAccess, async (request, response) => {
   try {
-    const { token } = request;
-    const decodedToken = jwt.verify(token, process.env.SECRET);
-    if (!token || !decodedToken.id) {
-      return response.status(401).json(getAccessDeniedMessage());
-    }
-    const userWhoAddedRanking = await User.findById(decodedToken.id);
-    if (!userWhoAddedRanking.admin) {
-      return response.status(401).json(getAccessDeniedMessage());
-    }
     const deletedRanking = await rankingService.deleteRanking(request.params.id);
     return response.status(200).json({ message: 'Ranking was deleted successfully', deletedRanking });
   } catch (error) {

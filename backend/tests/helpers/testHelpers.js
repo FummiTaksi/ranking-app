@@ -1,4 +1,5 @@
 const fs = require('fs');
+const bcrypt = require('bcryptjs');
 const Position = require('../../models/position');
 const Ranking = require('../../models/ranking');
 const Player = require('../../models/player');
@@ -47,6 +48,30 @@ const getKoskiBase64 = () => {
   return result;
 };
 
+const getAdminUser = async () => {
+  const passwordHash = await bcrypt.hash('password', 10);
+  return {
+    username: 'Admin1',
+    passwordHash,
+    admin: true,
+  };
+};
+
+const getNormalUser = async () => {
+  const passwordHash = await bcrypt.hash('password', 10);
+  return {
+    username: 'Normal1',
+    passwordHash,
+    admin: false,
+  };
+};
+
+const saveNormalUser = async () => {
+  const userModel = await getNormalUser();
+  const user = new User(userModel);
+  return user.save();
+};
+
 const removePositionsAndRankings = async () => {
   await Position.deleteMany({});
   await Ranking.deleteMany({});
@@ -88,6 +113,9 @@ module.exports = {
   getRankingModelBody,
   getRatingBase64,
   getKoskiBase64,
+  getAdminUser,
+  getNormalUser,
+  saveNormalUser,
   removePositionsAndRankings,
   removePositionsAndRankingsAndPlayers,
   removeUsers,

@@ -9,13 +9,16 @@ const {
   removeUsers,
   removeUsersAndSeedAdmin,
   getRankingModelBody,
+  saveNormalUser,
 } = require('../../helpers/testHelpers');
 
 const api = supertest(app);
 
+let user;
 beforeAll(async () => {
   await removePositionsAndRankingsAndPlayers();
   await removeUsersAndSeedAdmin();
+  user = await saveNormalUser();
 });
 
 const getCorrectToken = async () => {
@@ -24,6 +27,15 @@ const getCorrectToken = async () => {
     password: process.env.ADMIN_PASSWORD,
   };
   const response = await api.post('/api/login').send(correctCredentials);
+  return response.body.token;
+};
+
+const getNonAdminToken = async () => {
+  const credentials = {
+    username: user.username,
+    password: 'password',
+  };
+  const response = await api.post('/api/login').send(credentials);
   return response.body.token;
 };
 
@@ -52,13 +64,14 @@ const createNewRanking = async () => {
 describe('/api/ranking', () => {
   describe('/new', () => {
     describe('with incorrect credentials ', () => {
-      describe('token is not correct ', () => {
+      describe('user is not admin ', () => {
         let response;
         beforeAll(async () => {
-          response = await postNewRanking(correctCredentials(), 'bearer wrongtoken');
+          const token = await getNonAdminToken();
+          response = await postNewRanking(correctCredentials(), token);
         });
-        test(' status is 400', () => {
-          expect(response.status).toEqual(400);
+        test(' status is 401', () => {
+          expect(response.status).toEqual(401);
         });
         test(' error message is correct', () => {
           expect(response.body.error).toEqual('You must be signed in admin to create new ranking!');
@@ -131,9 +144,10 @@ describe('/api/ranking', () => {
       ranking = await createNewRanking();
       rankingId = ranking._id;
     });
-    describe('returns 400 when', () => {
-      test(' token is not correct', async () => {
-        await api.delete(`/api/ranking/${rankingId}`).set('Authorization', 'bearer wrongtoken ').expect(400);
+    describe('returns 401 when', () => {
+      test(' user is not admin', async () => {
+        const token = await getNonAdminToken();
+        await api.delete(`/api/ranking/${rankingId}`).set('Authorization', `bearer ${token}`).expect(401);
       }, apiTestTimeout);
     });
     describe('when given correct credentials', () => {

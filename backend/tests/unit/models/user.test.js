@@ -1,9 +1,11 @@
-const bcrypt = require('bcryptjs');
 const User = require('../../../models/user');
 const {
   connectToMongoose,
   disconnectFromMongoose,
 } = require('../../../db/connection');
+const {
+  getAdminUser,
+} = require('../../helpers/testHelpers');
 
 beforeAll(async () => {
   await connectToMongoose();
@@ -14,16 +16,8 @@ describe('User', () => {
     await User.deleteMany({});
   });
 
-  const getCorrectUser = async () => {
-    const passwordHash = await bcrypt.hash('password', 10);
-    return {
-      username: 'User1',
-      passwordHash,
-      admin: true,
-    };
-  };
   test(' can be created with valid credentials', async () => {
-    const userModel = await getCorrectUser();
+    const userModel = await getAdminUser();
     const user = new User(userModel);
     await user.save();
     const allUsers = await User.find({});
